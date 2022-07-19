@@ -45,27 +45,11 @@
             "slug": "change_password"
         },
         {
-            "url": "javascript:void(0)",
-            "name": "Customers",
-            "i18n": "customers",
-            "icon": "user",
-            "slug": "customers",
-            "submenu": [
-                {
-                    "url": "customer.index",
-                    "name": "Customers",
-                    "i18n": "language",
-                    "icon": "language",
-                    "slug": "language"
-                },
-                {
-                    "url": "classification.index",
-                    "name": "Classifications",
-                    "i18n": "setting",
-                    "icon": "language",
-                    "slug": "classification"
-                }
-            ]
+            "url": "category.index",
+            "name": "Categories",
+            "i18n": "change password",
+            "icon": "g_translate",
+            "slug": "change_password"
         },
         {
             "url": "slider.index",

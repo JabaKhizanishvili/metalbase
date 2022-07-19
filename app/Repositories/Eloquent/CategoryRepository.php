@@ -1,76 +1,37 @@
 <?php
+
 /**
- *  app/Repositories/Eloquent/CategoryRepository.php
+ *  app/Repositories/Eloquent/ProductRepository.php
  *
- * Date-Time: 07.06.21
- * Time: 17:02
- * @author Insite LLC <hello@insite.international>
+ * Date-Time: 30.07.21
+ * Time: 10:36
+ * @author Vakho Batsikadze <vakhobatsikadze@gmail.com>
  */
 
 namespace App\Repositories\Eloquent;
 
 
+use App\Models\File;
+use App\Models\Page;
+use App\Models\Staff;
 use App\Models\Category;
-use App\Repositories\CategoryRepositoryInterface;
+use App\Models\Vacancy;
 use App\Repositories\Eloquent\Base\BaseRepository;
+use App\Repositories\PageRepositoryInterface;
+use App\Repositories\StaffRepositoryInterface;
+use App\Repositories\VacancyRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use ReflectionClass;
 
-/**
- * Class LanguageRepository
- * @package App\Repositories\Eloquent
- */
-class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
+
+class CategoryRepository extends BaseRepository
 {
     /**
-     * CategoryRepository constructor.
-     *
-     * @param \App\Models\Category $model
+     * @param Page $model
      */
     public function __construct(Category $model)
     {
         parent::__construct($model);
     }
-
-
-
-    public function getCategoryTree($id = null)
-    {
-        return $id
-            ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->get()->toTree()
-            : $this->model::orderBy('position', 'ASC')->get()->toTree();
-    }
-
-    /**
-     * Specify category tree.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Support\Collection
-     */
-    public function getCategoryTreeWithoutDescendant($id = null)
-    {
-        return $id
-            ? $this->model::orderBy('position', 'ASC')->where('id', '!=', $id)->whereNotDescendantOf($id)->get()->toTree()
-            : $this->model::orderBy('position', 'ASC')->get()->toTree();
-    }
-
-    /**
-     * get visible category tree.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Support\Collection
-     */
-    public function getVisibleCategoryTree($id = null)
-    {
-        static $categories = [];
-
-        if (array_key_exists($id, $categories)) {
-            return $categories[$id];
-        }
-
-        return $categories[$id] = $id
-            ? $this->model::orderBy('position', 'ASC')->where('status', 1)->descendantsAndSelf($id)->toTree($id)
-            : $this->model::orderBy('position', 'ASC')->where('status', 1)->get()->toTree();
-    }
-
 }

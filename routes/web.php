@@ -55,8 +55,8 @@ Route::prefix('{locale?}')
                 Route::resource('translation', TranslationController::class);
 
                 // Category
-                // Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
-                // Route::get('category/{category}/destroy', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('category.destroy');
+                Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
+                Route::get('category/{category}/destroy', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('category.destroy');
                 //
                 // Product
                 Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
@@ -174,21 +174,18 @@ Route::prefix('{locale?}')
             Route::post('/contactus', [ContactController::class, 'ContactMail'])->name('client.contact.contactmail');
 
             // About Page
-
             Route::get('aboutus', [LoginPageController::class, 'aboutus'])->name('client.aboutus');
-
             // partners page
-
             Route::get('partners', [LoginPageController::class, 'partners'])->name('client.partners.index');
 
 
 
 
             // Product Page
-            Route::get('products', [\App\Http\Controllers\Client\ProductController::class, 'index'])->name('client.product.index');
-            Route::get('product/{product}', [\App\Http\Controllers\Client\ProductController::class, 'show'])->name('client.product.show');
+            // Route::get('products', [\App\Http\Controllers\Client\ProductController::class, 'index'])->name('client.product.index');
+            // Route::get('product/{product}', [\App\Http\Controllers\Client\ProductController::class, 'show'])->name('client.product.show');
 
-            Route::get('category/{category}', [\App\Http\Controllers\Client\CategoryController::class, 'show'])->name('client.category.show');
-            Route::get('popular', [\App\Http\Controllers\Client\CategoryController::class, 'popular'])->name('client.category.popular');
+            // Route::get('category/{category}', [\App\Http\Controllers\Client\CategoryController::class, 'show'])->name('client.category.show');
+            // Route::get('popular', [\App\Http\Controllers\Client\CategoryController::class, 'popular'])->name('client.category.popular');
         });
     });

@@ -8,7 +8,6 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
 const HeroSlider = (props) => {
-    console.log(usePage().props.sliders, 'esaa');
     return (
         <Swiper
             //   spaceBetween={50}

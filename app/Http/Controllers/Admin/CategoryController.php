@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  app/Http/Controllers/Admin/CategoryController.php
  *
@@ -12,6 +13,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Language;
 use App\Models\Translations\CategoryTranslation;
 use App\Repositories\CategoryRepositoryInterface;
@@ -22,96 +24,89 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-
-
-    /**
-     * @var \App\Repositories\CategoryRepositoryInterface
-     */
     private $categoryRepository;
 
-    /**
-     * @param \App\Repositories\CategoryRepositoryInterface $categoryRepository
-     */
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
-    {
+    public function __construct(
+        CategoryRepository $categoryRepository
+    ) {
         $this->categoryRepository = $categoryRepository;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function index(CategoryRequest $request)
     {
-//        dd($languages = Language::where('status' ,true)->pluck('title', 'locale'));
+        /*return view('admin.pages.product.index', [
+            'products' => $this->productRepository->getData($request, ['translations', 'categories'])
+        ]);*/
+
         return view('admin.nowa.views.categories.index', [
-            'data' => $this->categoryRepository->getData($request, ['translations'])
+            'data' => $this->categoryRepository->getData($request),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
         $category = $this->categoryRepository->model;
-        $categories = $this->categoryRepository->getCategoryTree();
-
-        //dd($categories);
-
         $url = locale_route('category.store', [], false);
         $method = 'POST';
 
         return view('admin.nowa.views.categories.form', [
-            'category' => $category,
             'url' => $url,
             'method' => $method,
-            'categories' => $categories
+            'category' => $category,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param ProductRequest $request
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @return Application|RedirectResponse|Redirector
+     * @throws ReflectionException
      */
     public function store(CategoryRequest $request)
     {
-       //dd($request->all());
-        $saveData = Arr::except($request->except('_token','path'), []);
-        $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
-        $saveData['parent_id'] = $saveData['parent_id'] ? $saveData['parent_id'] : null;
+
+        //dd($request->all());
+        $saveData = Arr::except($request->except('_token'), []);
+        //$saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
+
+        $customer = $this->staffRepository->create($saveData);
+
 
         //dd($saveData);
-        $category = $this->categoryRepository->create($saveData);
+
 
         // Save Files
         if ($request->hasFile('images')) {
-            $category = $this->categoryRepository->saveFiles($category->id, $request);
+            $customer = $this->staffRepository->saveFiles($customer->id, $request);
         }
 
-
-        return redirect(locale_route('category.index', $category->id))->with('success', __('admin.create_successfully'));
-
+        return redirect(locale_route('category.index', $customer->id))->with('success', __('admin.create_successfully'));
     }
 
     /**
      * Display the specified resource.
      *
      * @param string $locale
-     * @param \App\Models\Category $category
+     * @param Product $product
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function show(string $locale, Category $category)
+    public function show(string $locale, Customer $product)
     {
-        return view('admin.pages.category.show', [
-            'category' => $category,
+        return view('admin.pages.product.show', [
+            'product' => $product,
         ]);
     }
 
@@ -119,124 +114,81 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param string $locale
-     * @param \App\Models\Category $category
+     * @param Category $category
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
-    public function edit(string $locale, Category $category, CategoryRepository $categoryRepository)
+    public function edit(string $locale, Category $category)
     {
         $url = locale_route('category.update', $category->id, false);
         $method = 'PUT';
 
-        $categories = $this->categoryRepository->getCategoryTreeWithoutDescendant($category->id);
-
-
-
-        return view('admin.nowa.views.categories.form', [
-            'category' => $category,
+        /*return view('admin.pages.product.form', [
+            'product' => $product,
             'url' => $url,
             'method' => $method,
-            'categories' => $categories
+            'categories' => $this->categories
+        ]);*/
+
+        return view('admin.nowa.views.categories.form', [
+            'staff' => $category,
+            'url' => $url,
+            'method' => $method,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\Admin\CategoryRequest $request
+     * @param ProductRequest $request
      * @param string $locale
-     * @param \App\Models\Category $category
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Product $product
+     * @return Application|RedirectResponse|Redirector
+     * @throws ReflectionException
      */
-    public function update(CategoryRequest $request, string $locale, Category $category)
+    public function update(CategoryRequest $request, string $locale, Category $staff)
     {
         //dd($request->all());
-
-        $saveData = Arr::except($request->except('_token','path'), []);
+        $saveData = Arr::except($request->except('_token'), []);
         $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
-        $saveData['parent_id'] = $saveData['parent_id'] ? $saveData['parent_id'] : null;
-
-        $this->categoryRepository->update($category->id, $saveData);
 
 
-        // Save Files
+        //dd($staff->id);
 
-            $category = $this->categoryRepository->saveFiles($category->id, $request);
+        if ($this->categoryRepository->update($staff->id, $saveData)) {
+        }
 
-        //dd(count($data));
+        $this->categoryRepository->saveFiles($staff->id, $request);
 
 
-        return redirect(locale_route('category.index', $category->id))->with('success', __('admin.update_successfully'));
+        return redirect(locale_route('category.index', $staff->id))->with('success', __('admin.update_successfully'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param string $locale
-     * @param \App\Models\Category $category
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Product $product
+     * @return Application|RedirectResponse|Redirector
      */
     public function destroy(string $locale, Category $category)
     {
-        $this->deleteCategoryPath($category->id);
         if (!$this->categoryRepository->delete($category->id)) {
-            return redirect(locale_route('category.show', $category->id))->with('danger', __('admin.not_delete_message'));
+            return redirect(locale_route('category.index', $category->id))->with('danger', __('admin.not_delete_message'));
         }
         return redirect(locale_route('category.index'))->with('success', __('admin.delete_message'));
     }
 
-    private function deleteCategoryPath($category_id) {
-        //$this->db->query("DELETE FROM category_path WHERE category_id = '" . (int)$category_id . "'");
-
-        DB::table('category_path')->where('category_id', $category_id)->delete();
-
-        //$query = $this->db->query("SELECT * FROM category_path WHERE path_id = '" . (int)$category_id . "'");
-
-        $data = DB::table('category_path')->select('*')
-            ->where('path_id',$category_id)->get();
-
-        foreach ($data as $result) {
-            $this->deleteCategoryPath($result['category_id']);
+    public function docDelete($locale, $id)
+    {
+        $file = File::query()->where('id', $id)->firstOrFail();
+        $id = $file->fileable_id;
+        //dd($file);
+        if (Storage::exists('public/Customer/' . $file->fileable_id . '/files/' . $file->title)) {
+            Storage::delete('public/Customer/' . $file->fileable_id . '/files/' . $file->title);
         }
 
-
-    }
-
-
-    public function autocomplete(Request $request, CategoryRepository $categoryRepository) {
-        $json = array();
-
-        if ($request->get('filter_name') !== null) {
-
-            $filter_data = array(
-                'filter_name' => $request->get('filter_name'),
-                'sort'        => 'name',
-                'order'       => 'ASC',
-                'start'       => 0,
-                'limit'       => 5
-            );
-
-            $results = $this->categoryRepository->getCategories($filter_data);
-
-            foreach ($results as $result) {
-                $json[] = array(
-                    'category_id' => $result['category_id'],
-                    'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
-                );
-            }
-        }
-
-        $sort_order = array();
-
-        foreach ($json as $key => $value) {
-            $sort_order[$key] = $value['name'];
-        }
-
-        array_multisort($sort_order, SORT_ASC, $json);
-
-        header('Content-Type: application/json');
-        echo json_encode($json);
+        $file->delete();
+        return redirect(locale_route('customer.edit', $id))->with('success', __('admin.delete_message'));
     }
 }

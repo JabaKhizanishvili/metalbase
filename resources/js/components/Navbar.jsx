@@ -50,7 +50,7 @@ const Navbar = () => {
                 <div className="lg:bg-custom-blue-900   lg:text-white  ">
                     <div className="wrapper flex items-center justify-between">
                         <div className="flex items-center whitespace-nowrap lg:mb-0 mb-5 -ml-6 lg:ml-0">
-                            <Link href="/" className="hidden lg:inline-block">
+                            <Link href={route("client.home.index")} className="hidden lg:inline-block">
                                 <img src="/assets/images/logo.png" alt="" className="w-80  h-auto py-1" />
                             </Link>
                             <div>

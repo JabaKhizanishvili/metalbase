@@ -16,36 +16,41 @@ class CategorySeeder extends Seeder
     {
         //
 
-        // $Category = [
-        //     [
-        //         "name" => "filebi",
-        //     ],
-        //     [
-        //         "name" => "kafeli",
-        //     ],
-        //     [
-        //         "name" => "metlaxi",
-        //     ],
-        //     [
-        //         "name" => "laminati",
-        //     ],
-        //     [
-        //         "name" => "rkinis kari",
-        //     ],
-        //     [
-        //         "name" => "xis kari",
-        //     ],
-        //     [
-        //         "name" => "abazanis",
-        //     ],
+        $Category = [
+            [
+                "name" => "filebi",
+            ],
+            [
+                "name" => "kafeli",
+            ],
+            [
+                "name" => "metlaxi",
+            ],
+            [
+                "name" => "laminati",
+            ],
+            [
+                "name" => "rkinis kari",
+            ],
+            [
+                "name" => "xis kari",
+            ],
+            [
+                "name" => "abazanis",
+            ],
 
-        // ];
+        ];
 
         // // Insert Languages
         // Category::insert($Category);
+        foreach ($Category as $cat) {
+            Category::create([
+                "name" => $cat['name']
+            ]);
+        }
 
-        Category::create([
-            "name" => "test"
-        ]);
+        // Category::create([
+        //     "name" => "test"
+        // ]);
     }
 }

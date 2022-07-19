@@ -1,36 +1,4 @@
-<?php
-$_checked = ($category and $category->parent_id == null) ? ' checked':'';
 
-$traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
-
-        //dd($categories);
-
-
-    $html = '<ul style="margin: initial !important;padding: initial !important;">';
-
-    foreach ($categories as $_category) {
-        $checked = ($category and $_category->id == $category->parent_id) ? 'checked':'';
-        $html .= '<li style="margin-bottom: 5px"><label class="rdiobox">
-                        <input type="radio" name="parent_id" data-checkboxes="mygroup" class="custom-control-input" '. $checked .' id="'.$_category->id.'" value="'.$_category->id.'">
-                        <span style="margin-left: 15px">'.$_category->title.'</span>
-
-                        </label></li>';
-
-
-        if(count($_category->children)){
-            $html .= '<li style="padding-left: 20px">';
-            $html .= $traverse($_category->children, $prefix.'-');
-            $html .= '</li>';
-        }
-
-    }
-
-    $html .= '</ul>';
-
-    return $html;
-};
-
-?>
 @extends('admin.nowa.views.layouts.app')
 
 @section('styles')
@@ -59,45 +27,24 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$category->created_at ? __('admin.category-update') : __('admin.category-create')}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$staff->created_at ? __('admin.skill-update') : __('admin.skill-create')}}</span>
         </div>
         <div class="justify-content-center mt-2">
             @include('admin.nowa.views.layouts.components.breadcrump')
         </div>
     </div>
     <!-- /breadcrumb -->
-    <input name="old-images[]" id="old_images" hidden disabled value="{{$category->files}}">
+    <input name="old-images[]" id="old_images" hidden disabled value="{{$staff->files}}">
     <!-- row -->
-    {!! Form::model($category,['url' => $url, 'method' => $method,'files' => true]) !!}
+    {!! Form::model($staff,['url' => $url, 'method' => $method,'files' => true]) !!}
     <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.productcatergories')</h6>
-                    </div>
+
+
                     <div class="mb-4">
-                        <p class="mg-b-10">@lang('admin.catparent')</p>
 
-                        <ul>
-                            <li style="margin-bottom: 5px"><label class="rdiobox">
-                                    <input type="radio" name="parent_id" data-checkboxes="mygroup" class="custom-control-input" <?=$_checked;?> value="0">
-                                    <span style="margin-left: 15px">-none-</span>
-
-                                </label></li>
-                            <li>
-                                <ul>
-                                    <li>
-                                        <?=$traverse($categories);?>
-                                    </li>
-                                </ul>
-
-                            </li>
-                        </ul>
-
-                    </div>
-                    <div class="mb-4">
-                        <p class="mg-b-10">@lang('admin.title')</p>
                         <div class="panel panel-primary tabs-style-2">
                             <div class=" tab-menu-heading">
                                 <div class="tabs-menu1">
@@ -126,15 +73,20 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                                         ?>
                                         <div class="tab-pane {{$active}}" id="lang-{{$locale}}">
                                             <div class="form-group">
-                                                <input type="text" name="{{$locale.'[title]'}}" class="form-control" placeholder="@lang('admin.title')" value="{{$category->translate($locale)->title ?? ''}}">
+                                                <label class="form-label">@lang('admin.name')</label>
+                                                <input type="text" name="{{$locale.'[name]'}}" class="form-control" placeholder="@lang('admin.name')" value="{{$staff->translate($locale)->name ?? ''}}">
+
                                             </div>
-                                            @error($locale.'.title')
+                                            @error($locale.'.name')
                                             <small class="text-danger">
                                                 <div class="error">
                                                     {{$message}}
                                                 </div>
                                             </small>
                                             @enderror
+
+
+
                                         </div>
 
                                     @endforeach
@@ -144,28 +96,19 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                         </div>
 
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">@lang('admin.slug')</label>
-                        <input type="text" name="slug" class="form-control" placeholder="@lang('admin.slug')" value="{{$category->slug ?? ''}}">
-                    </div>
-                    @error('slug')
-                    <small class="text-danger">
-                        <div class="error">
-                            {{$message}}
-                        </div>
-                    </small>
-                    @enderror
-                    <div class="form-group mb-0 justify-content-end">
+
+
+                    {{-- <div class="form-group mb-0 justify-content-end">
                         <div class="checkbox">
                             <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" name="status" class="custom-control-input" id="checkbox-2" {{$category->status ? 'checked' : ''}}>
+                                <input type="checkbox" data-checkboxes="mygroup" name="status" class="custom-control-input" id="checkbox-2" {{$staff->status ? 'checked' : ''}}>
                                 <label for="checkbox-2" class="custom-control-label mt-1">{{__('admin.status')}}</label>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>
-                            {!! Form::submit($category->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit($staff->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
 

@@ -61,7 +61,7 @@ use Kalnoy\Nestedset\NodeTrait;
  */
 class Category extends Model
 {
-    use Translatable, HasFactory, ScopeFilter, NodeTrait;
+    use Translatable, HasFactory, ScopeFilter;
 
 
     /**
@@ -109,8 +109,6 @@ class Category extends Model
     ////            );
     //        }
     //        );
-    //
-    //
     //    }
 
     public function getFilterScopes(): array
