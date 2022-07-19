@@ -10,15 +10,15 @@ export const navigations = [
         text: "მთავარი",
     },
     {
-        link: "/about",
+        link: route("client.aboutus"),
         text: "ჩვენ შესახებ",
     },
     {
-        link: "/partners",
+        link: route("client.partners.index"),
         text: "პარტნიორები",
     },
     {
-        link: "/contact",
+        link: route("client.contact.index"),
         text: "კონტაქტი",
     },
 ];

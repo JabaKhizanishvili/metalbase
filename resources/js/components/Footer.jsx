@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage, useForm } from '@inertiajs/inertia-react'
 import React from 'react';
 import { contactInfo } from "./Data";
 import { categories, categoryDropdown, navigations } from "./NavData";
@@ -7,6 +7,8 @@ import { Form } from "./Shared";
 // import { ReactComponent as Tel } from "/assets/images/icons/svg/tel.svg";
 
 const Footer = () => {
+    const { errors, gphone, gemail, gaddress } = usePage().props;
+
     return (
         <div className="bg-custom-blue-900 py-10 sm:pb-20 text-white">
             <div className="wrapper ">
@@ -67,12 +69,12 @@ const Footer = () => {
                         <a href="#" className="block mt-6">
                             {/* <Pin fill="white" className="inline-block mr-2" /> */}
                             <img className="inline-block align-middle mr-2" src="/assets/images/icons/svg/pin.svg" />
-                            {contactInfo.location}
+                            {gaddress.value}
                         </a>
                         <a href={`tel:${contactInfo.tel}`} className="block mt-3">
                             {/* <Tel fill="white" className="inline-block mr-2" /> */}
                             <img className="inline-block align-middle mr-2" src="/assets/images/icons/svg/tel.svg" />
-                            {contactInfo.tel}
+                            {gphone.value}
                         </a>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss');
 
 /*
  |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ mix.js('resources/js/app.js', 'public/js').js('resources/js/admin.js', 'public/j
     ])
 
     .postCss('resources/css/AppEng.css', 'public/css', [
+        require('postcss-import'),
+        require('tailwindcss'),
         //
     ])
     // .browserSync("inertia.test")

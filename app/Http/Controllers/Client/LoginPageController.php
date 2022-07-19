@@ -134,11 +134,11 @@ class LoginPageController extends Controller
         //dd('ok');
         return redirect(locale_route('client.cabinet'));
     }
-    public function Cabinet(Request $request)
+    public function aboutus(Request $request)
     {
 
 
-        $page = Page::where('key', 'login')->firstOrFail();
+        $page = Page::where('key', 'about')->firstOrFail();
 
         $images = [];
         foreach ($page->sections as $sections) {
@@ -157,7 +157,52 @@ class LoginPageController extends Controller
 
         //dd($products);
 
-        return Inertia::render('Cabinet', [
+        return Inertia::render('About', [
+            'success' => $request->session()->get('success'),
+            "sliders" => $sliders->get(), "page" => $page, "seo" => [
+                "title" => $page->meta_title,
+                "description" => $page->meta_description,
+                "keywords" => $page->meta_keyword,
+                "og_title" => $page->meta_og_title,
+                "og_description" => $page->meta_og_description,
+
+                //            "image" => "imgg",
+                //            "locale" => App::getLocale()
+            ], 'popular_products' => $products, 'images' => $images
+        ])->withViewData([
+            'meta_title' => $page->meta_title,
+            'meta_description' => $page->meta_description,
+            'meta_keyword' => $page->meta_keyword,
+            "image" => $page->file,
+            'og_title' => $page->meta_og_title,
+            'og_description' => $page->meta_og_description
+        ]);
+    }
+
+
+    public function partners(Request $request)
+    {
+
+        $page = Page::where('key', 'about')->firstOrFail();
+
+        $images = [];
+        foreach ($page->sections as $sections) {
+            if ($sections->file) {
+                $images[] = asset($sections->file->getFileUrlAttribute());
+            } else {
+                $images[] = null;
+            }
+        }
+
+        $sliders = Slider::query()->where("status", 1)->with(['file', 'translations']);
+        //        dd($page->file);
+        //        dd(App::getLocale());
+        $products = app(ProductRepository::class)->getPopularProducts();
+
+
+        //dd($products);
+
+        return Inertia::render('Partners', [
             'success' => $request->session()->get('success'),
             "sliders" => $sliders->get(), "page" => $page, "seo" => [
                 "title" => $page->meta_title,

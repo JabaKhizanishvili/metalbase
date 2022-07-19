@@ -174,11 +174,13 @@ Route::prefix('{locale?}')
             Route::post('/contactus', [ContactController::class, 'ContactMail'])->name('client.contact.contactmail');
 
             // About Page
-            Route::get('purpose', [LoginPageController::class, 'purpose'])->name('client.aboutus.purpose');
-            Route::get('ethics', [LoginPageController::class, 'ethics'])->name('client.aboutus.ethics');
-            Route::get('politics', [LoginPageController::class, 'politics'])->name('client.aboutus.politics');
-            Route::get('management', [LoginPageController::class, 'management'])->name('client.aboutus.management');
-            Route::get('recognition', [LoginPageController::class, 'recognition'])->name('client.aboutus.recognition');
+
+            Route::get('aboutus', [LoginPageController::class, 'aboutus'])->name('client.aboutus');
+
+            // partners page
+
+            Route::get('partners', [LoginPageController::class, 'partners'])->name('client.partners.index');
+
 
             // Product Page
             Route::get('products', [\App\Http\Controllers\Client\ProductController::class, 'index'])->name('client.product.index');

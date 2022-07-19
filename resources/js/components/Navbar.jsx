@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 // import Logo from "../assets/images/logo.png";
 import { FaPhone } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
@@ -14,7 +14,7 @@ import { contactInfo } from "./Data";
 
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
-
+    const { errors, gphone, gemail, gaddress } = usePage().props;
     return (
         <div className="text-sm relative z-50 h-12 bg-custom-blue-900 lg:h-auto flex items-center justify-between">
             <Link href="/" className="lg:hidden pl-3">
@@ -58,11 +58,11 @@ const Navbar = () => {
                         </div>
                         <div className="flex items-center">
                             <a
-                                href={`tel:${contactInfo.tel}`}
+                                href={`tel:${gphone.value}`}
                                 className="lg:relative lg:bottom-auto lg:left-auto mr-6 absolute bottom-3 left-3 "
                             >
                                 <FaPhone className="inline-block mr-2" />
-                                {contactInfo.tel}
+                                {gphone.value}
                             </a>
                             <div className="lg:relative lg:top-auto lg:left-auto inline-block absolute top-14 left-3 group">
                                 <div className="w-6 h-6 overflow-hidden">
