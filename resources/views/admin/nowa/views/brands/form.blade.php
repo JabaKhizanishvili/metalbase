@@ -27,7 +27,7 @@
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$brand->created_at ? __('admin.skill-update') : __('admin.skill-create')}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$brand->created_at ? __('admin.brands-update') : __('admin.brands-create')}}</span>
         </div>
         <div class="justify-content-center mt-2">
             @include('admin.nowa.views.layouts.components.breadcrump')
@@ -120,7 +120,7 @@
 
     <!-- /row -->
     <!-- row -->
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -133,7 +133,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- row closed -->
 
     <!-- /row -->

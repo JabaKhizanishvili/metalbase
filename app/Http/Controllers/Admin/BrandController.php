@@ -119,13 +119,13 @@ class BrandController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function edit(string $locale, Brands $category)
+    public function edit(string $locale, Brands $brand)
     {
-        $url = locale_route('category.update', $category->id, false);
+        $url = locale_route('brand.update', $brand->id, false);
         $method = 'PUT';
 
         return view('admin.nowa.views.brands.form', [
-            'brand' => $category,
+            'brand' => $brand,
             'url' => $url,
             'method' => $method,
         ]);

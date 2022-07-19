@@ -18,7 +18,7 @@ class Brands extends Model
 {
     use Translatable, HasFactory, ScopeFilter;
     protected $table = 'brands';
-    // protected $fillable = ['status'];
+    protected $fillable = ['name'];
 
     public function getFilterScopes(): array
     {
