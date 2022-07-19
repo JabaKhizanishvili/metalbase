@@ -169,7 +169,7 @@ Route::prefix('{locale?}')
 
             // Contact Page
             Route::get('/contact', [ContactController::class, 'index'])->name('client.contact.index');
-            Route::post('/contact-us', [ContactController::class, 'mail'])->name('client.contact.mail');
+            // Route::post('/contact-us', [ContactController::class, 'mail'])->name('client.contact.mail');
             // contact us from navbar
             Route::post('/contactus', [ContactController::class, 'ContactMail'])->name('client.contact.contactmail');
 
@@ -180,6 +180,8 @@ Route::prefix('{locale?}')
             // partners page
 
             Route::get('partners', [LoginPageController::class, 'partners'])->name('client.partners.index');
+
+
 
 
             // Product Page

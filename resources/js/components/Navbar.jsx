@@ -14,7 +14,7 @@ import { contactInfo } from "./Data";
 
 const Navbar = () => {
     const [showMenu, setShowMenu] = useState(false);
-    const { errors, gphone, gemail, gaddress } = usePage().props;
+    const { errors, gphone, gemail, gaddress, locales, currentLocale, locale_urls } = usePage().props;
     return (
         <div className="text-sm relative z-50 h-12 bg-custom-blue-900 lg:h-auto flex items-center justify-between">
             <Link href="/" className="lg:hidden pl-3">
@@ -64,11 +64,20 @@ const Navbar = () => {
                                 <FaPhone className="inline-block mr-2" />
                                 {gphone.value}
                             </a>
+
+                            {/* languages */}
+
+
+
                             <div className="lg:relative lg:top-auto lg:left-auto inline-block absolute top-14 left-3 group">
                                 <div className="w-6 h-6 overflow-hidden">
                                     <img src="/assets/images/icons/ge.png" alt="" />
                                 </div>
+
                                 <div className="absolute right-0 top-full w-full pt-2 lg:hidden group-hover:block">
+                                    <a href="#">
+                                        <img src="/assets/images/icons/en.png" alt="" />
+                                    </a>
                                     <a href="#">
                                         <img src="/assets/images/icons/en.png" alt="" />
                                     </a>

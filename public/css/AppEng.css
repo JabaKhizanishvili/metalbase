@@ -1,28 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @font-face {
     font-family: "worksans";
     src: url(/fonts/WorkSans-Regular.ttf);
 }
-
 @font-face {
     font-family: "playfair";
     src: url(/fonts/PlayfairDisplay-VariableFont_wght.ttf);
 }
-
 *,
 *::after,
 *::before {
     font-family: "worksans";
 }
-
 body {
     font-family: "worksans";
 
 }
-
 .playfair {
     font-family: "playfair";
 }
+

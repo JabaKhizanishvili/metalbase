@@ -68,11 +68,11 @@
             ]
         },
         {
-            "url": "staff.index",
-            "name": "Staff",
-            "i18n": "staff",
-            "icon": "g_translate",
-            "slug": "staff"
+            "url": "slider.index",
+            "name": "Slider",
+            "i18n": "page",
+            "icon": "language",
+            "slug": "page"
         },
         {
             "url": "javascript:void(0)",

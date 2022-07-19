@@ -73,11 +73,12 @@ class Category extends Model
      * @var string[]
      */
     protected $fillable = [
-        'category_id',
-        'slug',
-        'position',
-        'status',
-        'parent_id'
+        // 'category_id',
+        // 'slug',
+        // 'position',
+        // 'status',
+        // 'parent_id'
+        // 'name'
     ];
 
     /** @var string */
@@ -85,8 +86,9 @@ class Category extends Model
 
     /** @var array */
     public $translatedAttributes = [
-        'title',
-        'description'
+        // 'title',
+        // 'description'
+        'name'
     ];
 
 
