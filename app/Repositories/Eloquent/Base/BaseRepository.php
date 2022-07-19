@@ -85,9 +85,10 @@ class BaseRepository implements EloquentRepositoryInterface
      */
     public function update(int $id, array $data = [])
     {
+        dd($id);
         $this->model = $this->findOrFail($id);
         try {
-            //dd($data);
+            // dd($data);
             return $this->model->update($data);
         } catch (\Illuminate\Database\QueryException $exception) {
             return $exception->errorInfo;

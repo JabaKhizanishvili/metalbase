@@ -57,6 +57,10 @@ Route::prefix('{locale?}')
                 // Category
                 Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
                 Route::get('category/{category}/destroy', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('category.destroy');
+
+                // brands
+                Route::resource('brand', \App\Http\Controllers\Admin\BrandController::class);
+                Route::get('brand/{brand}/destroy', [\App\Http\Controllers\Admin\BrandController::class, 'destroy'])->name('category.destroy');
                 //
                 // Product
                 Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);

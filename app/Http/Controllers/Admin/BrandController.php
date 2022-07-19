@@ -11,25 +11,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CategoryRequest;
-use App\Models\Category;
+use App\Http\Requests\Admin\BrandRequest;
+use App\Models\Brands;
 use App\Models\File;
 use App\Models\Language;
 use App\Models\Translations\CategoryTranslation;
-use App\Repositories\CategoryRepositoryInterface;
-use App\Repositories\Eloquent\CategoryRepository;
+use App\Repositories\BrandRepositoryInterface;
+use App\Repositories\Eloquent\BrandRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class BrandController extends Controller
 {
-    private $categoryRepository;
+    private $brandRepository;
 
     public function __construct(
-        CategoryRepository $categoryRepository
+        BrandRepository $brandRepository
     ) {
-        $this->categoryRepository = $categoryRepository;
+        $this->brandRepository = $brandRepository;
     }
 
     /**
@@ -37,14 +37,14 @@ class CategoryController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index(CategoryRequest $request)
+    public function index(BrandRequest $request)
     {
         /*return view('admin.pages.product.index', [
             'products' => $this->productRepository->getData($request, ['translations', 'categories'])
         ]);*/
 
-        return view('admin.nowa.views.categories.index', [
-            'data' => $this->categoryRepository->getData($request),
+        return view('admin.nowa.views.brands.index', [
+            'data' => $this->brandRepository->getData($request),
         ]);
     }
 
