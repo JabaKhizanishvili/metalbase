@@ -21,6 +21,7 @@ use App\Repositories\Eloquent\BrandRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Locale;
 
 class BrandController extends Controller
 {
@@ -55,14 +56,14 @@ class BrandController extends Controller
      */
     public function create()
     {
-        $category = $this->categoryRepository->model;
-        $url = locale_route('category.store', [], false);
+        $brand = $this->brandRepository->model;
+        $url = locale_route('brand.store', [], false);
         $method = 'POST';
 
-        return view('admin.nowa.views.categories.form', [
+        return view('admin.nowa.views.brands.form', [
             'url' => $url,
             'method' => $method,
-            'category' => $category,
+            'brand' => $brand,
         ]);
     }
 
@@ -74,14 +75,14 @@ class BrandController extends Controller
      * @return Application|RedirectResponse|Redirector
      * @throws ReflectionException
      */
-    public function store(CategoryRequest $request)
+    public function store(BrandRequest $request)
     {
 
         //dd($request->all());
         $saveData = Arr::except($request->except('_token'), []);
         //$saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
 
-        $customer = $this->staffRepository->create($saveData);
+        $customer = $this->brandRepository->create($saveData);
 
 
         //dd($saveData);
@@ -89,10 +90,10 @@ class BrandController extends Controller
 
         // Save Files
         if ($request->hasFile('images')) {
-            $customer = $this->staffRepository->saveFiles($customer->id, $request);
+            $customer = $this->brandRepository->saveFiles($customer->id, $request);
         }
 
-        return redirect(locale_route('category.index', $customer->id))->with('success', __('admin.create_successfully'));
+        return redirect(locale_route('brand.index', $customer->id))->with('success', __('admin.create_successfully'));
     }
 
     /**
@@ -103,7 +104,7 @@ class BrandController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function show(string $locale, Customer $product)
+    public function show(string $locale, Brands $product)
     {
         return view('admin.pages.product.show', [
             'product' => $product,
@@ -118,50 +119,31 @@ class BrandController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function edit(string $locale, Category $category)
+    public function edit(string $locale, Brands $category)
     {
         $url = locale_route('category.update', $category->id, false);
         $method = 'PUT';
 
-        /*return view('admin.pages.product.form', [
-            'product' => $product,
-            'url' => $url,
-            'method' => $method,
-            'categories' => $this->categories
-        ]);*/
-
-        return view('admin.nowa.views.categories.form', [
-            'staff' => $category,
+        return view('admin.nowa.views.brands.form', [
+            'brand' => $category,
             'url' => $url,
             'method' => $method,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param ProductRequest $request
-     * @param string $locale
-     * @param Product $product
-     * @return Application|RedirectResponse|Redirector
-     * @throws ReflectionException
-     */
-    public function update(CategoryRequest $request, string $locale, Category $staff)
+
+    public function update(BrandRequest $request, string $locale, Brands $brand)
     {
-        // dd($request->all());
         $saveData = Arr::except($request->except('_token'), []);
         $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
 
-
-        //dd($staff->id);
-
-        if ($this->categoryRepository->update($staff->id, $saveData)) {
+        if ($this->brandRepository->update($brand->id, $saveData)) {
         }
 
-        $this->categoryRepository->saveFiles($staff->id, $request);
+        $this->brandRepository->saveFiles($brand->id, $request);
 
 
-        return redirect(locale_route('category.index', $staff->id))->with('success', __('admin.update_successfully'));
+        return redirect(locale_route('brand.index', $brand->id))->with('success', __('admin.update_successfully'));
     }
 
     /**
@@ -171,24 +153,24 @@ class BrandController extends Controller
      * @param Product $product
      * @return Application|RedirectResponse|Redirector
      */
-    public function destroy(string $locale, Category $category)
+    public function destroy(string $locale, Brands $brand)
     {
-        if (!$this->categoryRepository->delete($category->id)) {
-            return redirect(locale_route('category.index', $category->id))->with('danger', __('admin.not_delete_message'));
+        if (!$this->brandRepository->delete($brand->id)) {
+            return redirect(locale_route('brand.index', $brand->id))->with('danger', __('admin.not_delete_message'));
         }
-        return redirect(locale_route('category.index'))->with('success', __('admin.delete_message'));
+        return redirect(locale_route('brand.index'))->with('success', __('admin.delete_message'));
     }
 
-    public function docDelete($locale, $id)
-    {
-        $file = File::query()->where('id', $id)->firstOrFail();
-        $id = $file->fileable_id;
-        //dd($file);
-        if (Storage::exists('public/Customer/' . $file->fileable_id . '/files/' . $file->title)) {
-            Storage::delete('public/Customer/' . $file->fileable_id . '/files/' . $file->title);
-        }
+    // public function docDelete($locale, $id)
+    // {
+    //     $file = File::query()->where('id', $id)->firstOrFail();
+    //     $id = $file->fileable_id;
+    //     //dd($file);
+    //     if (Storage::exists('public/Customer/' . $file->fileable_id . '/files/' . $file->title)) {
+    //         Storage::delete('public/Customer/' . $file->fileable_id . '/files/' . $file->title);
+    //     }
 
-        $file->delete();
-        return redirect(locale_route('customer.edit', $id))->with('success', __('admin.delete_message'));
-    }
+    //     $file->delete();
+    //     return redirect(locale_route('customer.edit', $id))->with('success', __('admin.delete_message'));
+    // }
 }

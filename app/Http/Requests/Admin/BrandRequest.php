@@ -43,8 +43,8 @@ class BrandRequest extends FormRequest
         }
 
         return [
-            config('translatable.fallback_locale') . '.title' => 'required',
-            'slug' => ['required', 'alpha_dash', Rule::unique('categories', 'slug')->ignore($this->category)],
+            // config('translatable.fallback_locale') . '.title' => 'required',
+            // 'slug' => ['required', 'alpha_dash', Rule::unique('categories', 'slug')->ignore($this->category)],
         ];
     }
 }

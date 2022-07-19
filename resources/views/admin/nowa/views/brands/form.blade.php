@@ -27,16 +27,16 @@
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$staff->created_at ? __('admin.skill-update') : __('admin.skill-create')}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$brand->created_at ? __('admin.skill-update') : __('admin.skill-create')}}</span>
         </div>
         <div class="justify-content-center mt-2">
             @include('admin.nowa.views.layouts.components.breadcrump')
         </div>
     </div>
     <!-- /breadcrumb -->
-    <input name="old-images[]" id="old_images" hidden disabled value="{{$staff->files}}">
+    <input name="old-images[]" id="old_images" hidden disabled value="{{$brand->files}}">
     <!-- row -->
-    {!! Form::model($staff,['url' => $url, 'method' => $method,'files' => true]) !!}
+    {!! Form::model($brand,['url' => $url, 'method' => $method,'files' => true]) !!}
     <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card">
@@ -74,7 +74,7 @@
                                         <div class="tab-pane {{$active}}" id="lang-{{$locale}}">
                                             <div class="form-group">
                                                 <label class="form-label">@lang('admin.name')</label>
-                                                <input type="text" name="{{$locale.'[name]'}}" class="form-control" placeholder="@lang('admin.name')" value="{{$staff->translate($locale)->name ?? ''}}">
+                                                <input type="text" name="{{$locale.'[name]'}}" class="form-control" placeholder="@lang('admin.name')" value="{{$brand->translate($locale)->name ?? ''}}">
 
                                             </div>
                                             @error($locale.'.name')
@@ -101,14 +101,14 @@
                     {{-- <div class="form-group mb-0 justify-content-end">
                         <div class="checkbox">
                             <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" name="status" class="custom-control-input" id="checkbox-2" {{$staff->status ? 'checked' : ''}}>
+                                <input type="checkbox" data-checkboxes="mygroup" name="status" class="custom-control-input" id="checkbox-2" {{$brand->status ? 'checked' : ''}}>
                                 <label for="checkbox-2" class="custom-control-label mt-1">{{__('admin.status')}}</label>
                             </div>
                         </div>
                     </div> --}}
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>
-                            {!! Form::submit($staff->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit($brand->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
 

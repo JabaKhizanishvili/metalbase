@@ -13,7 +13,6 @@ class CategoryTranslation extends BaseTranslationModel
      * @var string[]
      */
     protected $fillable = [
-        'title',
-        'description',
+        'name'
     ];
 }

@@ -81,15 +81,12 @@ class CategoryController extends Controller
         $saveData = Arr::except($request->except('_token'), []);
         //$saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
 
-        $customer = $this->staffRepository->create($saveData);
-
-
-        //dd($saveData);
+        $customer = $this->categoryRepository->create($saveData);
 
 
         // Save Files
         if ($request->hasFile('images')) {
-            $customer = $this->staffRepository->saveFiles($customer->id, $request);
+            $customer = $this->categoryRepository->saveFiles($customer->id, $request);
         }
 
         return redirect(locale_route('category.index', $customer->id))->with('success', __('admin.create_successfully'));
@@ -131,7 +128,7 @@ class CategoryController extends Controller
         ]);*/
 
         return view('admin.nowa.views.categories.form', [
-            'staff' => $category,
+            'category' => $category,
             'url' => $url,
             'method' => $method,
         ]);
@@ -146,22 +143,19 @@ class CategoryController extends Controller
      * @return Application|RedirectResponse|Redirector
      * @throws ReflectionException
      */
-    public function update(CategoryRequest $request, string $locale, Category $staff)
+    public function update(CategoryRequest $request, string $locale, Category $category)
     {
         // dd($request->all());
         $saveData = Arr::except($request->except('_token'), []);
         $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
-
-
-        //dd($staff->id);
-
-        if ($this->categoryRepository->update($staff->id, $saveData)) {
+        // dd($saveData);
+        if ($this->categoryRepository->update($category->id, $saveData)) {
         }
 
-        $this->categoryRepository->saveFiles($staff->id, $request);
+        $this->categoryRepository->saveFiles($category->id, $request);
 
 
-        return redirect(locale_route('category.index', $staff->id))->with('success', __('admin.update_successfully'));
+        return redirect(locale_route('category.index', $category->id))->with('success', __('admin.update_successfully'));
     }
 
     /**

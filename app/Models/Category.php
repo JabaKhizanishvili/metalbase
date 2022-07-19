@@ -78,7 +78,7 @@ class Category extends Model
         // 'position',
         // 'status',
         // 'parent_id'
-        // 'name'
+        'name'
     ];
 
     /** @var string */
@@ -92,7 +92,7 @@ class Category extends Model
     ];
 
 
-    protected $with = ['translations'];
+    // protected $with = ['translations'];
 
 
 
