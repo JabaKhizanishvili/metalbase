@@ -13,6 +13,17 @@ import { useState } from "react";
 import { contactInfo } from "./Data";
 
 const Navbar = () => {
+    const langarr = {
+        "ge": 'ქართული',
+        "en": 'english'
+    }
+
+    const langFlags = {
+        "ქართული": "/assets/images/icons/ge.png",
+        "english": "/assets/images/icons/en.png",
+        "ge": "/assets/images/icons/ge.png",
+        "en": "/assets/images/icons/en.png",
+    }
     const [showMenu, setShowMenu] = useState(false);
     const { errors, gphone, gemail, gaddress, locales, currentLocale, locale_urls } = usePage().props;
     return (
@@ -71,16 +82,20 @@ const Navbar = () => {
 
                             <div className="lg:relative lg:top-auto lg:left-auto inline-block absolute top-14 left-3 group">
                                 <div className="w-6 h-6 overflow-hidden">
-                                    <img src="/assets/images/icons/ge.png" alt="" />
+                                    {/* {langarr[currentLocale]} */}
+                                    {/* <img src="/assets/images/icons/ge.png" alt="" /> */}
+                                    <img src={langFlags[currentLocale]} alt="" />
                                 </div>
 
                                 <div className="absolute right-0 top-full w-full pt-2 lg:hidden group-hover:block">
-                                    <a href="#">
-                                        <img src="/assets/images/icons/en.png" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="/assets/images/icons/en.png" alt="" />
-                                    </a>
+
+                                    {
+                                        Object.keys(locales).map((e, i) => {
+                                            return (
+                                                <Link key={i} href={locale_urls[e]}> <img src={langFlags[e]} alt="" /></Link>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>
