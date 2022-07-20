@@ -133,5 +133,7 @@ Route::prefix('{locale?}')
             Route::get('doors', [TilesController::class, 'doors'])->name('client.doors.index');
             //bathroom
             Route::get('bathroom', [TilesController::class, 'bathroom'])->name('client.bathroom.index');
+            //singleproduct
+            Route::get('singleproduct', [TilesController::class, 'singleproduct'])->name('client.singleproduct.index');
         });
     });
