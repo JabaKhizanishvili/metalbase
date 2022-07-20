@@ -7,6 +7,64 @@ import { BiChevronRight } from "react-icons/bi";
 import Layout from "../Layouts/Layout";
 
 const Tiles = ({ seo, page, product, name }) => {
+    let links = function (links) {
+        let rows = [];
+        //links.shift();
+        //links.splice(-1);
+        {
+            links.map(function (item, index) {
+                if (index > 0 && index < links.length - 1) {
+                    rows.push(
+                        <Link
+                            href={item.url}
+                            className={item.active ? "pageNum active" : "pageNum"}
+                        >
+                            {item.label}
+                        </Link>
+                    );
+                }
+            });
+        }
+        return <div className="nums"> {rows.length > 1 ? rows : null} </div>;
+    };
+
+    let linksPrev = function (links) {
+        let rowCount = 0;
+        links.map(function (item, index) {
+            if (index > 0 && index < links.length - 1) {
+                rowCount++;
+            }
+        });
+        return rowCount > 1 ? (
+            <Link href={links[0].url}>
+                {/* <Arrow color="#2F3E51" rotate="90" /> */}
+                <button className="arrow" style={{ transform: "rotate(-90deg)" }}>
+                    <ArrowDown color="#1DBFCC" />
+                </button>
+                {/* <Arrow color="#2F3E51" rotate="90" /> */}
+
+            </Link>
+        ) : null;
+    };
+    let linksNext = function (links) {
+        let rowCount = 0;
+        links.map(function (item, index) {
+            if (index > 0 && index < links.length - 1) {
+                rowCount++;
+            }
+        });
+        return rowCount > 1 ? (
+            <Link href={links[links.length - 1].url}>
+                {/* <Arrow color="#2F3E51" rotate="-90" /> */}
+                {/* <Arrow color="#2F3E51" rotate="-90" /> */}
+                <button className="arrow" style={{ transform: "rotate(90deg)" }}>
+                    <ArrowDown color="#1DBFCC" />
+                </button>
+            </Link>
+        ) : null;
+    };
+
+
     const tileSlider = [
         {
             name: "Arabesco Marfil",
@@ -69,7 +127,6 @@ const Tiles = ({ seo, page, product, name }) => {
             link: "/single-product",
         },
     ];
-    console.log(product.data, 'esaa');
 
     return (
         <Layout seo={seo}>
@@ -101,7 +158,7 @@ const Tiles = ({ seo, page, product, name }) => {
                                 //     }
                                 //     link={item.link}
                                 // />
-                                <div className={`p-4 transition hover:bg-zinc-50 relative max-w-sm`}>
+                                <div className={`p-4 transition hover:bg-zinc-50 relative max-w-sm`} key={index}>
                                     <div className="text-xl whitespace-nowrap mb-2">{item.title}</div>
                                     <div className="opacity-50 lowercase">ზომა: {item.height + ' x ' + item.width}</div>
                                     <div className="w-full h-60 my-5">
@@ -121,11 +178,17 @@ const Tiles = ({ seo, page, product, name }) => {
                             );
                         })}
                     </div>
-                    <div className="pb-20 flex items-center justify-center">
+                    {/* <div className="pb-20 flex items-center justify-center">
                         <button className="mx-1 opacity-100">1</button>
                         <button className="mx-1 opacity-50">2</button>
                         <button className="mx-1 opacity-50">3</button>
                         <button className="mx-1 opacity-50">4</button>
+                    </div> */}
+
+                    <div className="pb-20 flex items-center justify-center pagination flex centered">
+                        {linksPrev(product.links)}
+                        <button className="pageNum">{links(product.links)}</button>
+                        {linksNext(product.links)}
                     </div>
                 </div>
             </div>
