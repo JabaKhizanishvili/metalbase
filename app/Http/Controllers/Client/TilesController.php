@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 use App\Repositories\Eloquent\ProductRepository;
-use App\Models\Staff;
+use App\Models\Product;
 
 
 
@@ -45,8 +45,7 @@ class TilesController extends Controller
         return Inertia::render(
             'Tiles',
             [
-                // "staff" => Staff::all(),
-                "staff" => Staff::with('latestImage')->get(),
+                "product" => Product::with('latestImage')->paginate(10),
                 "sliders" => $sliders->get(),
                 "page" => $page,
                 "seo" => [

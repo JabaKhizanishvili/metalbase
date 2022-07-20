@@ -126,9 +126,9 @@ Route::prefix('{locale?}')
             Route::get('partners', [LoginPageController::class, 'partners'])->name('client.partners.index');
 
             //tiles
-            Route::get('tiles', [TilesController::class, 'index'])->name('client.tiles.index');
+            Route::get('tiles', [TilesController::class, 'index'])->name('client.tiles.index')->withoutMiddleware('active');
             //tiles2
-            Route::get('tiles2', [TilesController::class, 'tiles2'])->name('client.tiles2.index');
+            Route::get('tiles2', [TilesController::class, 'tiles2'])->name('client.tiles2.index')->withoutMiddleware('active');
             // doors
             Route::get('doors', [TilesController::class, 'doors'])->name('client.doors.index');
             //bathroom

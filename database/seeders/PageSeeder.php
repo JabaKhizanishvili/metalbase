@@ -21,77 +21,32 @@ class PageSeeder extends Seeder
                 'key' => 'home'
             ],
             [
-                'key' => 'login'
+                'key' => 'aboutus'
             ],
-            // about us
-            [
-                'key' => 'purpose'
-            ],
-            [
-                'key' => 'ethics'
-            ],
-            [
-                'key' => 'politics'
-            ],
-            [
-                'key' => 'management'
-            ],
-            [
-                'key' => 'recognition'
-            ],
-            // servies
-            [
-                'key' => 'services'
-            ],
-            [
-                'key' => 'stators'
-            ],
-            [
-                'key' => 'certification'
-            ],
-            [
-                'key' => 'comprecognition'
-            ],
-            [
-                'key' => 'classification'
-            ],
-            // documentation
-            [
-                'key' => 'owner-application'
-            ],
-            [
-                'key' => 'evaluation'
-            ],
-            [
-                'key' => 'circulars'
-            ],
-            //our team
-            [
-                'key' => 'office'
-            ],
-            [
-                'key' => 'inspectors'
-            ],
-            [
-                'key' => 'career'
-            ],
-
-            //contact
-
             [
                 'key' => 'contact'
             ],
-
-
             [
-                'key' => 'about'
+                'key' => 'partners'
             ],
-
             [
-                'key' => 'products'
-            ]
-
-
+                'key' => 'tiles'
+            ],
+            [
+                'key' => 'tiles2'
+            ],
+            [
+                'key' => 'laminate'
+            ],
+            [
+                'key' => 'doors'
+            ],
+            [
+                'key' => 'bathroom'
+            ],
+            [
+                'key' => 'irons'
+            ],
         ];
 
         // Insert Pages
