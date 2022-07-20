@@ -12,7 +12,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { tileSlider, bathroom, doorsHome, partners } from "../components/Data";
 import ProductSlider from "../components/ProductSlider";
 
-const Home = ({ seo, page }) => {
+const Home = ({ seo, page, partners }) => {
     const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
     const sharedData = usePage().props.localizations;
     return (
@@ -112,7 +112,13 @@ const Home = ({ seo, page }) => {
                                     className="text-center inline-block 2xl:mx-10 mx-5 mb-5 grayscale transition hover:grayscale-0"
                                 >
                                     <div className="h-16 w-auto m-auto flex items-center justify-center mb-2">
-                                        <img src={item.logo} alt="" className="object-contain " />
+                                        {/* <img src={item.logo} alt="" className="object-contain " /> */}
+                                        <img src={item.latest_image != null
+                                            ? "/" +
+                                            item.latest_image.path +
+                                            "/" +
+                                            item.latest_image.title
+                                            : null} alt="" />
                                     </div>
                                     <div className="lowercase">{item.name}</div>
                                 </div>

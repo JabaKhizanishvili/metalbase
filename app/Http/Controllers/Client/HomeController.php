@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\Staff;
 use App\Models\Slider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -38,16 +39,19 @@ class HomeController extends Controller
 
         //dd($products);
 
-        return Inertia::render('Home', ["sliders" => $sliders->get(), "page" => $page, "seo" => [
-            "title" => $page->meta_title,
-            "description" => $page->meta_description,
-            "keywords" => $page->meta_keyword,
-            "og_title" => $page->meta_og_title,
-            "og_description" => $page->meta_og_description,
+        return Inertia::render('Home', [
+            'partners' => Staff::with('latestImage')->get(),
+            "sliders" => $sliders->get(), "page" => $page, "seo" => [
+                "title" => $page->meta_title,
+                "description" => $page->meta_description,
+                "keywords" => $page->meta_keyword,
+                "og_title" => $page->meta_og_title,
+                "og_description" => $page->meta_og_description,
 
-            //            "image" => "imgg",
-            //            "locale" => App::getLocale()
-        ],  'images' => $images])->withViewData([
+                //            "image" => "imgg",
+                //            "locale" => App::getLocale()
+            ],  'images' => $images
+        ])->withViewData([
             'meta_title' => $page->meta_title,
             'meta_description' => $page->meta_description,
             'meta_keyword' => $page->meta_keyword,
