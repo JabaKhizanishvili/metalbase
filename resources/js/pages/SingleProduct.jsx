@@ -4,6 +4,7 @@ import { Link, usePage } from '@inertiajs/inertia-react'
 import Layout from "../Layouts/Layout";
 
 import { BiChevronRight } from "react-icons/bi";
+import { CgChevronDoubleRight } from "react-icons/cg";
 // import tile1 from "../assets/images/products/1.png";
 // import tile2 from "../assets/images/products/2.png";
 // import tile3 from "../assets/images/products/3.png";
@@ -11,7 +12,9 @@ import { BiChevronRight } from "react-icons/bi";
 // import tile5 from "../assets/images/products/5.png";
 // import { Link } from "react-router-dom";
 
-const SingleProduct = ({ seo, page }) => {
+const SingleProduct = ({ seo, page, product }) => {
+
+    console.log(product, 'esa');
     const otherItems = [
         {
             img: "/assets/images/products/1.png",
@@ -48,30 +51,36 @@ const SingleProduct = ({ seo, page }) => {
                 </div>
                 <div className="mt-10 mb-12 text-2xl ">
                     {/* <TilesIcon className="inline-block" /> Arabesco Antic Marfil */}
-                    <img className="inline-block" src="/assets/images/icons/svg/tiles.svg" /> Arabesco Antic Marfil
+                    <img className="inline-block" src="/assets/images/icons/svg/tiles.svg" /> {product.title}
                 </div>
                 <div className="flex flex-col lg:flex-row items-start justify-start mb-12">
                     <div className="lg:w-1/3 lg:h-96 lg:mx-0 lg:mr-10 w-auto mx-auto mb-10 ">
-                        <img src="/assets/images/products/3.png" alt="" className="w-full h-full object-contain" />
+                        <img className="main_img"
+                            src={product.latest_image != null
+                                ? "/" +
+                                product.latest_image.path +
+                                "/" +
+                                product.latest_image.title
+                                : null}
+
+                            alt="" />
                     </div>
                     <div className="max-w-lg">
                         <div className="lowercase tetx-justify mb-10">
-                            პროდუქტის აღწერა, რა არის, რისთვის გამოიყენება, როგორ მზადდება. ამ
-                            კონკრეტულ შემთხვევაში როგორი ხარისხისაა, საიდან არის შემოტანილი ან
-                            სადაა წარმოებული და ა.შ.
+                            {product.description}
                         </div>
                         <div>მახასიათებლები</div>
                         <div className="lowercase bg-zinc-100 px-2 mt-2 w-2/3">
-                            ბრენდი: Portland Ceniza PW
+                            ბრენდი: {product.brand_id}
                         </div>
                         <div className="lowercase bg-zinc-100 px-2 mt-2 w-2/3">
-                            სიგრძე: 60 სმ
+                            სიგრძე: {product.width}
                         </div>
                         <div className="lowercase bg-zinc-100 px-2 mt-2 w-2/3">
-                            სიგრძე: 60 სმ
+                            სიგანე: {product.height}
                         </div>
                         <div className="lowercase bg-zinc-100 px-2 mt-2 w-2/3">
-                            მწარმოებელი: ესპანეთი
+                            მწარმოებელი: {product.madein}
                         </div>
                     </div>
                 </div>

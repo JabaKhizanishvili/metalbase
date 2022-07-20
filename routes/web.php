@@ -130,10 +130,11 @@ Route::prefix('{locale?}')
             //tiles2
             Route::get('tiles2', [TilesController::class, 'tiles2'])->name('client.tiles2.index')->withoutMiddleware('active');
             // doors
-            Route::get('doors', [TilesController::class, 'doors'])->name('client.doors.index');
+            Route::get('doors', [TilesController::class, 'doors'])->name('client.doors.index')->withoutMiddleware('active');
             //bathroom
-            Route::get('bathroom', [TilesController::class, 'bathroom'])->name('client.bathroom.index');
+            Route::get('bathroom', [TilesController::class, 'bathroom'])->name('client.bathroom.index')->withoutMiddleware('active');
             //singleproduct
             Route::get('singleproduct', [TilesController::class, 'singleproduct'])->name('client.singleproduct.index');
+            Route::get('/singleproduct/{singleproduct}', [\App\Http\Controllers\Client\TilesController::class, 'show'])->name('client.singleproduct.show')->withoutMiddleware('active');
         });
     });

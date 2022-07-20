@@ -267,4 +267,28 @@ class TilesController extends Controller
             'og_description' => $page->meta_og_description
         ]);
     }
+
+
+    public function show(string $locale, $slug)
+    {
+        $page = Page::where('key', 'home')->firstOrFail();
+
+        return Inertia::render('SingleProduct', [
+            "product" => Product::with('latestImage')->find($slug),
+            "seo" => [
+                "title" => $page->meta_title ?? $page->meta_title,
+                "description" => $page->meta_description ?? $page->meta_description,
+                "keywords" => $page->meta_keyword ?? $page->meta_keyword,
+                "og_title" => $page->meta_og_title,
+                "og_description" => $page->meta_og_description,
+            ]
+        ])->withViewData([
+            'meta_title' => $page->meta_title ?? $page->meta_title,
+            'meta_description' => $page->meta_description ?? $page->meta_description,
+            'meta_keyword' => $page->meta_keyword ?? $page->meta_keyword,
+            "image" => $page->file,
+            'og_title' => $page->meta_og_title,
+            'og_description' => $page->meta_og_description
+        ]);
+    }
 }
