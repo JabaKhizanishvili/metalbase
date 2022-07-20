@@ -169,7 +169,7 @@ const Tiles = ({ seo, page, product, name }) => {
                                             item.latest_image.title
                                             : null} alt="" />
                                     </div>
-                                    <Link href={item.link} className="lowercase ">
+                                    <Link href={route("client.singleproduct.show", item.id)} className="lowercase ">
                                         ნახე სრულად <BiChevronRight className="inline-block" />
                                     </Link>
                                 </div>
