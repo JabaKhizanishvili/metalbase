@@ -100,10 +100,6 @@
 
                                             {{-- <div class="form-group">
                                                 <label class="form-label">@lang('admin.brand')</label>
-                                                <input type="text" name="{{$locale.'[brand]'}}" class="form-control" placeholder="@lang('admin.brand')" value="{{$product->translate($locale)->brand ?? ''}}">
-                                            </div> --}}
-                                            <div class="form-group">
-                                                <label class="form-label">@lang('admin.brand')</label>
                                                     <select class="form-control" name="brand" id='brand'>
                                                         @foreach ($brand as $cat)
 
@@ -118,29 +114,35 @@
                                                     {{$message}}
                                                 </div>
                                             </small>
-                                            @enderror
+                                            @enderror --}}
 
-                                            {{-- <div class="form-group">
+                                            <div class="input-field">
                                                 <label class="form-label">@lang('admin.category')</label>
-                                                <input type="text" name="{{$locale.'[category]'}}" class="form-control" placeholder="@lang('admin.category')" value="{{$product->translate($locale)->category ?? ''}}">
-                                            </div> --}}
-                                            <div class="form-group">
-                                                <label class="form-label">@lang('admin.category')</label>
-                                            <select class="form-control" name="category" id='category'>
-                                                @foreach ($category as $cat)
+                                                <select name="category_id" class="select2 browser-default">
+                                                    <option value="" disabled selected>Choose your option</option>
+                                                    @foreach ($category as $cat)
+                                                    {{-- <option value={{$cat->id}}>{{$cat->name}}</option>
+                                                    {{old('cat_id') ==  $cat->id   ?   "selected":""}} value="{{$cat->translate($locale)->brand}}"> {{$cat->name}}</option> --}}
 
-                                                   <option value={{$cat->translate($locale)->category}}>{{$cat->name}}</option>
+                                                    <option{{old('category_id') ==  $cat->id   ?   "selected":""}} value="{{$cat->id}}">{{$cat->name}}</option>
 
-                                                @endforeach
-                                            </select>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            @error($locale.'.category')
-                                            <small class="text-danger">
-                                                <div class="error">
-                                                    {{$message}}
-                                                </div>
-                                            </small>
-                                            @enderror
+
+                                            <div class="input-field">
+                                                <label class="form-label">@lang('admin.brand')</label>
+                                                <select name="brand_id" class="select2 browser-default">
+                                                    <option value="" disabled selected>Choose your option
+                                                    </option>
+                                                    @foreach ($brand as $cat)
+                                                    <option value={{$cat->id}}>{{$cat->name}}</option>
+                                                    {{old('cat_id') ==  $cat->id   ?   "selected":""}} value="{{$cat->translate($locale)->brand}}"> {{$cat->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+
 
 
 
@@ -156,6 +158,8 @@
                                                 </div>
                                             </small>
                                             @enderror
+
+
 
                                             <div class="form-group">
                                                 <label class="form-label">@lang('admin.height')</label>
@@ -192,15 +196,6 @@
 
                     </div>
 
-
-                    {{-- <div class="form-group mb-0 justify-content-end">
-                        <div class="checkbox">
-                            <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" name="status" class="custom-control-input" id="checkbox-2" {{$product->status ? 'checked' : ''}}>
-                                <label for="checkbox-2" class="custom-control-label mt-1">{{__('admin.status')}}</label>
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>
                             {!! Form::submit($product->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}

@@ -70,6 +70,8 @@ class Product extends Model implements Searchable
     protected $fillable = [
         'width',
         'heigth',
+        'brand_id',
+        'category_id',
     ];
 
     /** @var string */
@@ -81,8 +83,8 @@ class Product extends Model implements Searchable
     public $translatedAttributes = [
         'title',
         'description',
-        'brand',
-        'category',
+        'brand_id',
+        'category_id',
         'width',
         'height',
         'madein',
@@ -135,9 +137,16 @@ class Product extends Model implements Searchable
     /**
      * The categories that belong to the product.
      */
-    public function categories(): BelongsToMany
+
+
+    public function categories(): BelongsTo
     {
-        return $this->belongsToMany(Category::class, 'product_categories');
+        return $this->belongsTo(Category::class);
+    }
+
+    public function brands(): BelongsTo
+    {
+        return $this->belongsTo(Brands::class);
     }
 
     /**

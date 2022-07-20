@@ -128,9 +128,10 @@ class Category extends Model
             ]
         ];
     }
-    public function products(): BelongsToMany
+
+    public function products(): hasMany
     {
-        return $this->belongsToMany(Product::class, 'product_categories');
+        return $this->hasMany(Product::class);
     }
 
 

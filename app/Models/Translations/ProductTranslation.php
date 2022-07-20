@@ -23,8 +23,8 @@ class ProductTranslation extends BaseTranslationModel
     protected $fillable = [
         'title',
         'description',
-        'brand',
-        'category',
+        'brand_id',
+        'category_id',
         'width',
         'height',
         'madein',

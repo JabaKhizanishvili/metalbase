@@ -65,11 +65,6 @@ Route::prefix('{locale?}')
                 // Product
                 Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
                 Route::get('product/{product}/destroy', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('product.destroy');
-                //                // Gallery
-                Route::resource('gallery', GalleryController::class);
-                Route::get('gallery/{gallery}/destroy', [GalleryController::class, 'destroy'])->name('gallery.destroy');
-
-
 
                 // Slider
                 Route::resource('slider', SliderController::class);
@@ -96,24 +91,6 @@ Route::prefix('{locale?}')
                 Route::get('customer/subclass/{customer}/{subclass}/destroy', [\App\Http\Controllers\Admin\CustomerController::class, 'destroySubClass'])->name('subclass.destroy');
                 Route::get('customer/subclass/{customer}/{subclass}/{doc}/destroy', [\App\Http\Controllers\Admin\CustomerController::class, 'subclassDocDelete'])->name('subclass.delete-doc');
 
-                Route::resource('vacancy', \App\Http\Controllers\Admin\VacancyController::class);
-                Route::get('vacancy/{vacancy}/destroy', [\App\Http\Controllers\Admin\VacancyController::class, 'destroy'])->name('vacancy.destroy');
-                Route::get('vacancy/doc/{doc}/destroy', [\App\Http\Controllers\Admin\VacancyController::class, 'docDelete'])->name('vacancy.delete-doc');
-                Route::get('vacancy/{vacancy}/resumes', [\App\Http\Controllers\Admin\VacancyController::class, 'viewResumes'])->name('vacancy.resumes');
-
-                Route::resource('skill', \App\Http\Controllers\Admin\SkillController::class);
-                Route::get('skill/{skill}/destroy', [\App\Http\Controllers\Admin\SkillController::class, 'destroy'])->name('skill.destroy');
-
-                //staff
-                Route::resource('staff', \App\Http\Controllers\Admin\StaffController::class);
-                Route::get('staff/{staff}/destroy', [\App\Http\Controllers\Admin\StaffController::class, 'destroy'])->name('staff.destroy');
-
-                //ownerapplications
-                Route::resource('ownerapplications', \App\Http\Controllers\Admin\OwnerAppController::class);
-                Route::get('appdetails/{id}', [\App\Http\Controllers\Admin\OwnerAppController::class, 'details'])->name('app.details');
-                //evaluation
-                Route::resource('evaluations', \App\Http\Controllers\Admin\EvaluationController::class);
-                Route::get('evaldetails/{id}', [EvaluationController::class, 'details'])->name('eval.details');
 
                 // Password
                 Route::get('password', [\App\Http\Controllers\Admin\PasswordController::class, 'index'])->name('password.index');
@@ -128,41 +105,6 @@ Route::prefix('{locale?}')
             // Home Page
             Route::get('', [HomeController::class, 'index'])->name('client.home.index');
 
-            //services
-            Route::get('/services', [ServiceController::class, 'index'])->name('client.services.index');
-            Route::get('stators', [ServiceController::class, 'stators'])->name('client.services.stators');
-            Route::get('/certification', [ServiceController::class, 'Certification'])->name('client.services.certifications');
-            Route::get('/comprecognition', [ServiceController::class, 'Comprecognition'])->name('client.services.comprecognition');
-
-            // stators
-            Route::get('/stators/{id?}', [ServiceController::class, 'statorsId'])->name('client.services.stators');
-
-
-            // documentation
-            Route::get('/owner-application', [DocumentationController::class, 'index'])->name('client.services.ownerapplication');
-            Route::get('/evaluation', [DocumentationController::class, 'evaluation'])->name('client.services.evaluation');
-            Route::post('rateservices', [DocumentationController::class, 'add_rateservices'])->name('client.documentations.rateservices');
-            Route::post('sendapplication', [DocumentationController::class, 'sendapplication'])->name('client.documentations.sendapplication');
-            Route::get('/circulars', [DocumentationController::class, 'circulars'])->name('client.services.circulars');
-
-
-            // our team
-            Route::get('/office', [OurTeamController::class, 'index'])->name('client.services.office');
-            Route::get('/inspectors', [OurTeamController::class, 'inspectors'])->name('client.services.inspectors');
-            Route::get('/career', [OurTeamController::class, 'career'])->name('client.services.career');
-
-            Route::get('/vacancy/{vacancy}', [OurTeamController::class, 'viewVacancy'])->name('client.vacancy.show');
-
-            Route::post('vacancy/upload_application', [OurTeamController::class, 'appUpload'])->name('client.app-upload');
-
-
-            // cabinet
-            Route::get('/cabinet', [LoginPageController::class, 'Cabinet'])->name('client.cabinet');
-
-
-            Route::get('/login', [LoginPageController::class, 'Login'])->name('client.login');
-
-            Route::post('/loginuser', [LoginPageController::class, 'auth'])->name('client.auth');
 
             Route::get('/register', [LoginPageController::class, 'Register'])->name('client.register');
             Route::post('/registeruser', [App\Http\Controllers\Auth\AuthFrontendCostumController::class, 'register'])->name('register');
@@ -181,15 +123,5 @@ Route::prefix('{locale?}')
             Route::get('aboutus', [LoginPageController::class, 'aboutus'])->name('client.aboutus');
             // partners page
             Route::get('partners', [LoginPageController::class, 'partners'])->name('client.partners.index');
-
-
-
-
-            // Product Page
-            // Route::get('products', [\App\Http\Controllers\Client\ProductController::class, 'index'])->name('client.product.index');
-            // Route::get('product/{product}', [\App\Http\Controllers\Client\ProductController::class, 'show'])->name('client.product.show');
-
-            // Route::get('category/{category}', [\App\Http\Controllers\Client\CategoryController::class, 'show'])->name('client.category.show');
-            // Route::get('popular', [\App\Http\Controllers\Client\CategoryController::class, 'popular'])->name('client.category.popular');
         });
     });

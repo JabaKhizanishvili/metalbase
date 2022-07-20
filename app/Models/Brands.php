@@ -43,6 +43,13 @@ class Brands extends Model
     }
 
 
+
+    public function products(): hasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');

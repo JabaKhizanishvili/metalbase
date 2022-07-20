@@ -28,8 +28,8 @@ class CreateProductTranslationsTable extends Migration
 
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
-            $table->string('brand')->nullable();
-            $table->string('category')->nullable();
+            $table->string('brand_id')->nullable();
+            $table->string('category_id')->nullable();
             $table->string('width')->nullable();
             $table->string('height')->nullable();
             $table->string('madein')->nullable();
