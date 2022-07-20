@@ -13,9 +13,9 @@ const About = ({ seo, page, images }) => {
         <Layout seo={seo}>
             <div className="wrapper">
                 <div className="block pt-6">
-                    <p className="opacity-50 inline-block  lowercase">მთავარი</p>
+                    <p className="opacity-50 inline-block  lowercase">{__("client.navbar_main", sharedData)}</p>
                     <BiChevronRight className="inline-block mx-1" />
-                    <p className="  inline-block lowercase">ჩვენ შესახებ</p>
+                    <p className="  inline-block lowercase">{__("client.navbar_aboutus", sharedData)}</p>
                 </div>
                 <div className="sm:h-80 h-40 w-full my-8 bg-gradient-to-b from-custom-blue-900/[0.5] to-transparent">
                     <img
