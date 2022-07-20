@@ -9,10 +9,6 @@ import HeroSlider from "../components/HeroSlider";
 import { Link, usePage } from '@inertiajs/inertia-react'
 import Layout from "../Layouts/Layout";
 import { BiChevronRight } from "react-icons/bi";
-// import PartnerIcon from "/assets/images/icons/svg/partners.svg";
-// import TilesIcon from "/assets/images/icons/svg/tiles.svg";
-// import DoorIcon from "/assets/images/icons/svg/door.svg";
-// import Bathroom from "/assets/images/icons/svg/bathroom.svg";
 import { tileSlider, bathroom, doorsHome, partners } from "../components/Data";
 import ProductSlider from "../components/ProductSlider";
 

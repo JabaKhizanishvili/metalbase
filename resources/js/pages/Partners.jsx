@@ -1,11 +1,13 @@
 // import bg from "../assets/images/partners/bg.png";
 import { BiChevronRight } from "react-icons/bi";
+import { Link, usePage } from '@inertiajs/inertia-react'
 import { partnersPage } from "../components/Data";
 import Layout from "../Layouts/Layout";
 import React from "react";
 
 const Partners = ({ seo, page, partners }) => {
-    console.log(partners);
+    const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
+    const sharedData = usePage().props.localizations;
 
     return (
         <Layout seo={seo}>
@@ -15,19 +17,17 @@ const Partners = ({ seo, page, partners }) => {
             >
                 <div className="wrapper">
                     <div className="block pt-6">
-                        <p className="opacity-50 inline-block  lowercase">მთავარი</p>
+                        <p className="opacity-50 inline-block  lowercase">{__("client.navbar_main", sharedData)}</p>
                         <BiChevronRight className="inline-block mx-1" />
-                        <p className="  inline-block lowercase">პარტნიორები</p>
+                        <p className="  inline-block lowercase">{__("client.partners_index", sharedData)}</p>
                     </div>
                     <div className="sm:text-center max-w-xl mx-auto my-12">
-                        <div className="lowercase">აღმშენებლობა სმბ მეტალო ბაზა</div>
+                        <div className="lowercase"> {renderHTML(__('client.partners_title', sharedData).replace(/(?:\r\n|\r|\n)/g, '<br>'))}</div>
                         <div className="sm:text-4xl text-2xl my-5">
-                            რაიმე სლოგანი კომპანიის საქმიანობის შესახებ
+                            {renderHTML(__('client.partners_slogan', sharedData).replace(/(?:\r\n|\r|\n)/g, '<br>'))}
                         </div>
                         <p className="lowercase">
-                            ემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული
-                            ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი
-                            წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა
+                            {renderHTML(__('client.partners_description', sharedData).replace(/(?:\r\n|\r|\n)/g, '<br>'))}
                         </p>
                     </div>
                     <div className="block text-center sm:text-left">
