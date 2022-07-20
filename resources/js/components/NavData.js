@@ -25,27 +25,27 @@ export const navigations = [
 
 export const categories = [
     {
-        link: "/tiles",
+        link: route("client.tiles.index"),
         text: "ფილები",
         icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/tiles.svg" />,
     },
     {
-        link: "/tiles2",
+        link: route("client.tiles2.index"),
         text: "კაფელ მეტლახი",
         icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/tiles2.svg" />,
     },
     {
-        link: "/tiles2",
+        link: route("client.tiles2.index"),
         text: "ლამინატი",
         icon: <img style={{ backgroundColor: "#fff", }} src="//assets/images/icons/svg/laminate.svg" />,
     },
     {
-        link: "/doors",
+        link: route("client.doors.index"),
         text: "კარები",
         icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/door.svg" />,
     },
     {
-        link: "/bathroom",
+        link: route("client.bathroom.index"),
         text: "აბაზანის ავეჯი",
         icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/bathroom.svg" />,
     },

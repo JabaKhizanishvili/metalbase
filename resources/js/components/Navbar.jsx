@@ -8,7 +8,7 @@ import { FiSearch } from "react-icons/fi";
 import { RiMenuAddFill } from "react-icons/ri";
 // import Ge from "../assets/images/icons/ge.png";
 // import En from "../assets/images/icons/en.png";
-import { categories, categoryDropdown } from "./NavData";
+import { categoryDropdown } from "./NavData";
 import { useState } from "react";
 import { contactInfo } from "./Data";
 
@@ -32,6 +32,34 @@ const Navbar = ({ seo, page }) => {
         {
             link: route("client.contact.index"),
             text: __("client.navbar_contact", sharedData),
+        },
+    ];
+
+    const categories = [
+        {
+            link: route("client.tiles.index"),
+            text: __("client.navbar_tiles", sharedData),
+            icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/tiles.svg" />,
+        },
+        {
+            link: route("client.tiles2.index"),
+            text: __("client.navbar_tiles2", sharedData),
+            icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/tiles2.svg" />,
+        },
+        {
+            link: route("client.tiles2.index"),
+            text: __("client.navbar_laminate", sharedData),
+            icon: <img style={{ backgroundColor: "#fff", }} src="//assets/images/icons/svg/laminate.svg" />,
+        },
+        {
+            link: "/doors",
+            text: __("client.navbar_doors", sharedData),
+            icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/door.svg" />,
+        },
+        {
+            link: "/bathroom",
+            text: __("client.navbar_bathroom", sharedData),
+            icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/bathroom.svg" />,
         },
     ];
     const langarr = {
@@ -126,7 +154,7 @@ const Navbar = ({ seo, page }) => {
                     <div className="wrapper flex justify-between items-center ">
                         <div>
                             <div className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1] box-border group cursor-pointer relative ">
-                                რკინეული
+                                {__("client.navbar_irons", sharedData)}
                                 <BiChevronDown className="inline-block -mt-1 transition group-hover:rotate-180" />
                                 <div className="absolute lg:left-0 left-1/2 -translate-x-1/2 lg:translate-x-0 top-full bg-white py-5 px-3 z-40 transition opacity-0 invisible translate-y-5 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0  lg:border-transparent border-custom-blue-500/[.1] border">
                                     {categoryDropdown.map((item, index) => {
