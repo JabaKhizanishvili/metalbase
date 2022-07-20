@@ -33,7 +33,7 @@ class HomeController extends Controller
         $sliders = Slider::query()->where("status", 1)->with(['file', 'translations']);
         //        dd($page->file);
         //        dd(App::getLocale());
-        $products = app(ProductRepository::class)->getPopularProducts();
+        // $products = app(ProductRepository::class)->getPopularProducts();
 
 
         //dd($products);
@@ -47,7 +47,7 @@ class HomeController extends Controller
 
             //            "image" => "imgg",
             //            "locale" => App::getLocale()
-        ], 'popular_products' => $products, 'images' => $images])->withViewData([
+        ],  'images' => $images])->withViewData([
             'meta_title' => $page->meta_title,
             'meta_description' => $page->meta_description,
             'meta_keyword' => $page->meta_keyword,

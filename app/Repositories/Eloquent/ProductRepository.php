@@ -1,40 +1,35 @@
 <?php
+
 /**
  *  app/Repositories/Eloquent/ProductRepository.php
  *
  * Date-Time: 30.07.21
  * Time: 10:36
- * @author Insite LLC <hello@insite.international>
+ * @author Vakho Batsikadze <vakhobatsikadze@gmail.com>
  */
 
 namespace App\Repositories\Eloquent;
 
 
+use App\Models\File;
+use App\Models\Page;
 use App\Models\Product;
+use App\Models\Vacancy;
 use App\Repositories\Eloquent\Base\BaseRepository;
-use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\PageRepositoryInterface;
+use App\Repositories\StaffRepositoryInterface;
+use App\Repositories\VacancyRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
+use ReflectionClass;
 
-/**
- * Class LanguageRepository
- * @package App\Repositories\Eloquent
- */
-class ProductRepository extends BaseRepository implements ProductRepositoryInterface
+
+class ProductRepository extends BaseRepository implements StaffRepositoryInterface
 {
     /**
-     * @param \App\Models\Product $model
+     * @param Page $model
      */
     public function __construct(Product $model)
     {
         parent::__construct($model);
     }
-
-    public function getPopularProducts(){
-        $products = $this->model->where('popular',1)->whereHas('categories',function ($query){
-            $query->where('status',1);
-        })->with(['latestImage'])->inRandomOrder()->get();
-
-        //dd($products);
-        return $products;
-    }
-
 }

@@ -57,7 +57,7 @@ use Spatie\Searchable\SearchResult;
  */
 class Product extends Model implements Searchable
 {
-    use SoftDeletes, Translatable, HasFactory, ScopeFilter;
+    use Translatable, HasFactory, ScopeFilter;
 
     /**
      * @var string
@@ -68,12 +68,8 @@ class Product extends Model implements Searchable
      * @var string[]
      */
     protected $fillable = [
-        'slug',
-        'status',
-        'popular',
-        'sale',
-        'stock',
-        'code'
+        'width',
+        'heigth',
     ];
 
     /** @var string */
@@ -84,11 +80,12 @@ class Product extends Model implements Searchable
     /** @var array */
     public $translatedAttributes = [
         'title',
-        'short_description',
         'description',
-        'meta_title',
-        'meta_description',
-        'meta_keyword',
+        'brand',
+        'category',
+        'width',
+        'height',
+        'madein',
     ];
 
     //protected $with = ['translation'];
@@ -164,5 +161,4 @@ class Product extends Model implements Searchable
     {
         return $this->morphOne(File::class, 'fileable');
     }
-
 }

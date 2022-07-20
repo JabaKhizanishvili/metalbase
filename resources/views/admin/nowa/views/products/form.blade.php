@@ -1,37 +1,4 @@
-<?php
 
-$ids = $product->categories->pluck("id")->toArray();
-
-//dd($ids);
-
-
-$traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
-
-    $html = '<ul style="margin: initial !important;padding: initial !important;">';
-    foreach ($categories as $category) {
-        if(in_array($category->id,$ids)) $checked = 'checked';
-        else $checked = '';
-        $html .= '<li style="margin-bottom: 5px"><label class="ckbox">
-                        <input type="checkbox" name="categories[]" data-checkboxes="mygroup" class="custom-control-input" '. $checked .' id="'.$category->id.'" value="'.$category->id.'">
-                        <span style="margin-left: 5px">'.$category->title.'</span>
-
-                        </label></li>';
-
-
-        if(count($category->children)){
-            $html .= '<li class="child" style="padding-left: 20px;margin-bottom: 5px">';
-            $html .= $traverse($category->children, $prefix.'-');
-            $html .= '</li>';
-        }
-
-    }
-
-    $html .= '</ul>';
-
-    return $html;
-};
-
-?>
 @extends('admin.nowa.views.layouts.app')
 
 @section('styles')
@@ -60,7 +27,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$product->created_at ? __('admin.product-update') : __('admin.product-create')}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$product->created_at ? __('admin.skill-update') : __('admin.skill-create')}}</span>
         </div>
         <div class="justify-content-center mt-2">
             @include('admin.nowa.views.layouts.components.breadcrump')
@@ -75,8 +42,8 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
             <div class="card">
                 <div class="card-body">
 
-                    <div class="mb-4">
 
+                    <div class="mb-4">
 
                         <div class="panel panel-primary tabs-style-2">
                             <div class=" tab-menu-heading">
@@ -97,9 +64,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                             </div>
                             <div class="panel-body tabs-menu-body main-content-body-right border">
                                 <div class="tab-content">
-                                    <div class="main-content-label mg-b-5">
-                                    @lang('admin.productinfo')
-                                    </div>
+
                                     @foreach(config('translatable.locales') as $locale)
 
                                         <?php
@@ -107,89 +72,114 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                                         if($loop->first) $active = 'active';
                                         ?>
                                         <div class="tab-pane {{$active}}" id="lang-{{$locale}}">
+
                                             <div class="form-group">
                                                 <label class="form-label">@lang('admin.title')</label>
-                                                <input type="text" name="{{$locale.'[title]'}}" class="form-control" placeholder="Name" value="{{$product->translate($locale)->title ?? ''}}">
-                                                @error($locale.'.title')
-                                                <small class="text-danger">
-                                                    <div class="error">
-                                                        {{$message}}
-                                                    </div>
-                                                </small>
-                                                @enderror
+                                                <input type="text" name="{{$locale.'[title]'}}" class="form-control" placeholder="@lang('admin.title')" value="{{$product->translate($locale)->title ?? ''}}">
+
                                             </div>
+                                            @error($locale.'.title')
+                                            <small class="text-danger">
+                                                <div class="error">
+                                                    {{$message}}
+                                                </div>
+                                            </small>
+                                            @enderror
 
                                             <div class="form-group">
-                                                {!! Form::label($locale.'[short_description]',__('admin.short_description'),['class' => 'form-label']) !!}
-                                                {!! Form::text($locale.'[short_description]',$product->translate($locale)->short_description ?? '',['class' => 'form-control']) !!}
-
-                                                @error($locale.'.short_description')
-                                                <small class="text-danger">
-                                                    <div class="error">
-                                                        {{$message}}
-                                                    </div>
-                                                </small>
-                                                @enderror
+                                                <label class="form-label">@lang('admin.description')</label>
+                                                <input type="text" name="{{$locale.'[description]'}}" class="form-control" placeholder="@lang('admin.description')" value="{{$product->translate($locale)->description ?? ''}}">
                                             </div>
+                                            @error($locale.'.description')
+                                            <small class="text-danger">
+                                                <div class="error">
+                                                    {{$message}}
+                                                </div>
+                                            </small>
+                                            @enderror
+
+                                            {{-- <div class="form-group">
+                                                <label class="form-label">@lang('admin.brand')</label>
+                                                <input type="text" name="{{$locale.'[brand]'}}" class="form-control" placeholder="@lang('admin.brand')" value="{{$product->translate($locale)->brand ?? ''}}">
+                                            </div> --}}
+                                            <div class="form-group">
+                                                <label class="form-label">@lang('admin.brand')</label>
+                                                    <select class="form-control" name="brand" id='brand'>
+                                                        @foreach ($brand as $cat)
+
+                                                        <option value={{$cat->translate($locale)->brand}}>{{$cat->name}}</option>
+
+                                                        @endforeach
+                                                    </select>
+                                            </div>
+                                            @error($locale.'.brand')
+                                            <small class="text-danger">
+                                                <div class="error">
+                                                    {{$message}}
+                                                </div>
+                                            </small>
+                                            @enderror
+
+                                            {{-- <div class="form-group">
+                                                <label class="form-label">@lang('admin.category')</label>
+                                                <input type="text" name="{{$locale.'[category]'}}" class="form-control" placeholder="@lang('admin.category')" value="{{$product->translate($locale)->category ?? ''}}">
+                                            </div> --}}
+                                            <div class="form-group">
+                                                <label class="form-label">@lang('admin.category')</label>
+                                            <select class="form-control" name="category" id='category'>
+                                                @foreach ($category as $cat)
+
+                                                   <option value={{$cat->translate($locale)->category}}>{{$cat->name}}</option>
+
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                            @error($locale.'.category')
+                                            <small class="text-danger">
+                                                <div class="error">
+                                                    {{$message}}
+                                                </div>
+                                            </small>
+                                            @enderror
+
+
+
 
                                             <div class="form-group">
-                                                <label class="form-label" for="description">@lang('admin.description')</label>
-                                                <textarea class="form-control" id="description-{{$locale}}"
-                                                          name="{{$locale}}[description]'">
-                                                    {!! $product->translate($locale)->description ?? '' !!}
-                                                </textarea>
-                                                @error($locale.'.description')
-                                                <small class="text-danger">
-                                                    <div class="error">
-                                                        {{$message}}
-                                                    </div>
-                                                </small>
-                                                @enderror
+                                                <label class="form-label">@lang('admin.width')</label>
+                                                <input type="number" name="{{$locale.'[width]'}}" class="form-control" placeholder="@lang('admin.width')" value="{{$product->translate($locale)->width ?? ''}}">
                                             </div>
+                                            @error($locale.'.width')
+                                            <small class="text-danger">
+                                                <div class="error">
+                                                    {{$message}}
+                                                </div>
+                                            </small>
+                                            @enderror
 
-
-
-                                            <div class="main-content-label mg-b-5 text-danger">
-                                            @lang('admin.product_seo')
-                                            </div>
                                             <div class="form-group">
-                                                {!! Form::label($locale.'[meta_title]',__('admin.meta_title'),['class' => 'form-label']) !!}
-                                                {!! Form::text($locale.'[meta_title]',$product->translate($locale)->meta_title ?? '',['class' => 'form-control']) !!}
-
-                                                @error($locale.'.meta_title')
-                                                <small class="text-danger">
-                                                    <div class="error">
-                                                        {{$message}}
-                                                    </div>
-                                                </small>
-                                                @enderror
+                                                <label class="form-label">@lang('admin.height')</label>
+                                                <input type="number" name="{{$locale.'[height]'}}" class="form-control" placeholder="@lang('admin.height')" value="{{$product->translate($locale)->height ?? ''}}">
                                             </div>
+                                            @error($locale.'.height')
+                                            <small class="text-danger">
+                                                <div class="error">
+                                                    {{$message}}
+                                                </div>
+                                            </small>
+                                            @enderror
+
                                             <div class="form-group">
-                                                {!! Form::label($locale.'[meta_description]',__('admin.meta_description'),['class' => 'form-label']) !!}
-                                                {!! Form::text($locale.'[meta_description]',$product->translate($locale)->meta_keyword ?? '',['class' => 'form-control']) !!}
-
-                                                @error($locale.'.meta_description')
-                                                <small class="text-danger">
-                                                    <div class="error">
-                                                        {{$message}}
-                                                    </div>
-                                                </small>
-                                                @enderror
+                                                <label class="form-label">@lang('admin.madein')</label>
+                                                <input type="text" name="{{$locale.'[madein]'}}" class="form-control" placeholder="@lang('admin.madein')" value="{{$product->translate($locale)->madein ?? ''}}">
                                             </div>
-                                            <div class="form-group">
-                                                {!! Form::label($locale.'[meta_keyword]',__('admin.meta_keyword'),['class' => 'form-label']) !!}
-                                                {!! Form::text($locale.'[meta_keyword]',$product->translate($locale)->meta_description ?? '',['class' => 'form-control']) !!}
-
-                                                @error($locale.'.meta_keyword')
-                                                <small class="text-danger">
-                                                    <div class="error">
-                                                        {{$message}}
-                                                    </div>
-                                                </small>
-                                                @enderror
-                                            </div>
-
-
+                                            @error($locale.'.madein')
+                                            <small class="text-danger">
+                                                <div class="error">
+                                                    {{$message}}
+                                                </div>
+                                            </small>
+                                            @enderror
 
 
                                         </div>
@@ -203,98 +193,14 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                     </div>
 
 
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-body">
-
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.prodcategoriesss')</h6>
-                    </div>
-                    <div class="mb-4">
-
-
-                        <?=$traverse($categories);?>
-
-                            @if($errors->has('categories'))
-                                <small class="error text-danger">{{ $errors->first('categories') }}</small>
-                            @endif
-
-
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('slug',__('admin.slug'),['class' => 'form-label']) !!}
-                        <input type="text" name="slug" class="form-control" placeholder="@lang('admin.slug')" value="{{$product->slug ?? ''}}">
-                        @error('slug')
-                        <small class="text-danger">
-                            <div class="error">
-                                {{$message}}
-                            </div>
-                        </small>
-                        @enderror
-                    </div>
-
-
-                    <div class="form-group">
-                        {!! Form::label('code',__('admin.code'),['class' => 'form-label']) !!}
-                        {!! Form::text('code',$product->code,['class' => 'form-control']) !!}
-
-                        @error('code')
-                        <small class="text-danger">
-                            <div class="error">
-                                {{$message}}
-                            </div>
-                        </small>
-                        @enderror
-                    </div>
-
-                    <div class="form-group mb-0 justify-content-end">
+                    {{-- <div class="form-group mb-0 justify-content-end">
                         <div class="checkbox">
                             <div class="custom-checkbox custom-control">
                                 <input type="checkbox" data-checkboxes="mygroup" name="status" class="custom-control-input" id="checkbox-2" {{$product->status ? 'checked' : ''}}>
-                                <label for="checkbox-2" class="custom-control-label mt-1">@lang('admin.status')</label>
+                                <label for="checkbox-2" class="custom-control-label mt-1">{{__('admin.status')}}</label>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="ckbox">
-                            <input type="checkbox" name="popular"
-                                   value="true" {{$product->popular ? 'checked' : ''}}>
-                            <span>{{__('admin.popular')}}</span>
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="ckbox">
-                            <input type="checkbox" name="stock"
-                                   value="true" {{$product->stock ? 'checked' : ''}}>
-                            <span>{{__('admin.instock')}}</span>
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-
-                        {!! Form::label('sale',__('admin.sale')) !!}
-                        {!! Form::number('sale',$product->sale ?? '',['step'=>'0.1','class' => 'form-control']) !!}
-
-                        @error('sale')
-                        <small class="text-danger">
-                            <div class="error">
-                                {{$message}}
-                            </div>
-                        </small>
-                        @enderror
-
-                    </div>
-
-                    <div class="form-group">
-
-                    </div>
-
+                    </div> --}}
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>
                             {!! Form::submit($product->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}
@@ -304,6 +210,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                 </div>
             </div>
         </div>
+
     </div>
 
     <!-- /row -->
@@ -312,9 +219,6 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.prouctimages')</h6>
-                    </div>
                     <div class="input-images"></div>
                     @if ($errors->has('images'))
                         <span class="help-block">
@@ -395,48 +299,6 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
         } else {
             $('.input-images').imageUploader();
         }
-    </script>
-
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    <script>
-        @foreach(config('translatable.locales') as $locale)
-        CKEDITOR.replace('description-{{$locale}}', {
-            filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form'
-        });
-        @endforeach
-    </script>
-
-    <script>
-        $('[name="categories[]"]').click(function (e){
-            let $this = $(this);
-
-
-                let next = $this.closest('li').next('li');
-                //console.log(next);
-                if(next.hasClass('child')){
-                    if($this.is(':checked')){
-
-                        next.find('input[type=checkbox]').prop('checked',true);
-                    } else {
-                        next.find('input[type=checkbox]').prop('checked',false);
-                    }
-                }
-
-                if($this.parents('li').hasClass('child')){
-
-                    if($this.is(':checked')){
-
-                        $this.parents('.child').prev('li').find('input[type=checkbox]').prop('checked',true);
-                        //$this.parents('.child').find('input[type=checkbox]').prop('checked',true);
-                    } else {
-                        //$this.parents('.child').find('input[type=checkbox]').prop('checked',false);
-                        $this.parents('.child').prev('li').find('input[type=checkbox]').prop('checked',false);
-                    }
-                }
-
-
-        });
     </script>
 
 @endsection

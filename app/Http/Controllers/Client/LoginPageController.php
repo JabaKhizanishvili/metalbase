@@ -152,7 +152,7 @@ class LoginPageController extends Controller
         $sliders = Slider::query()->where("status", 1)->with(['file', 'translations']);
         //        dd($page->file);
         //        dd(App::getLocale());
-        $products = app(ProductRepository::class)->getPopularProducts();
+        // $products = app(ProductRepository::class)->getPopularProducts();
 
 
         //dd($products);
@@ -168,7 +168,9 @@ class LoginPageController extends Controller
 
                 //            "image" => "imgg",
                 //            "locale" => App::getLocale()
-            ], 'popular_products' => $products, 'images' => $images
+            ],
+            // 'popular_products' => $products,
+            'images' => $images
         ])->withViewData([
             'meta_title' => $page->meta_title,
             'meta_description' => $page->meta_description,
@@ -197,7 +199,7 @@ class LoginPageController extends Controller
         $sliders = Slider::query()->where("status", 1)->with(['file', 'translations']);
         //        dd($page->file);
         //        dd(App::getLocale());
-        $products = app(ProductRepository::class)->getPopularProducts();
+        // $products = app(ProductRepository::class)->getPopularProducts();
 
 
         //dd($products);
@@ -213,7 +215,9 @@ class LoginPageController extends Controller
 
                 //            "image" => "imgg",
                 //            "locale" => App::getLocale()
-            ], 'popular_products' => $products, 'images' => $images
+            ],
+            // 'popular_products' => $products,
+            'images' => $images
         ])->withViewData([
             'meta_title' => $page->meta_title,
             'meta_description' => $page->meta_description,
