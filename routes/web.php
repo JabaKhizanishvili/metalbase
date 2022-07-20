@@ -27,6 +27,7 @@ use App\Http\Controllers\Client\ServiceController;
 use App\Http\Controllers\Client\DocumentationController;
 use App\Http\Controllers\Client\OurTeamController;
 use App\Http\Controllers\Client\LoginPageController;
+use App\Http\Controllers\Client\TilesController;
 
 
 
@@ -123,5 +124,10 @@ Route::prefix('{locale?}')
             Route::get('aboutus', [LoginPageController::class, 'aboutus'])->name('client.aboutus');
             // partners page
             Route::get('partners', [LoginPageController::class, 'partners'])->name('client.partners.index');
+
+            //tiles
+            Route::get('tiles', [TilesController::class, 'index'])->name('client.tiles.index');
+            //tiles2
+            Route::get('tiles2', [TilesController::class, 'tiles2'])->name('client.tiles2.index');
         });
     });
