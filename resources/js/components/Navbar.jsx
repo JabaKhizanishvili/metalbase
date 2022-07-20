@@ -52,12 +52,12 @@ const Navbar = ({ seo, page }) => {
             icon: <img style={{ backgroundColor: "#fff", }} src="//assets/images/icons/svg/laminate.svg" />,
         },
         {
-            link: "/doors",
+            link: route("client.doors.index"),
             text: __("client.navbar_doors", sharedData),
             icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/door.svg" />,
         },
         {
-            link: "/bathroom",
+            link: route("client.bathroom.index"),
             text: __("client.navbar_bathroom", sharedData),
             icon: <img style={{ backgroundColor: "#fff", }} src="/assets/images/icons/svg/bathroom.svg" />,
         },
