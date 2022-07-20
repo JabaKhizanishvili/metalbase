@@ -8,11 +8,32 @@ import { FiSearch } from "react-icons/fi";
 import { RiMenuAddFill } from "react-icons/ri";
 // import Ge from "../assets/images/icons/ge.png";
 // import En from "../assets/images/icons/en.png";
-import { categories, categoryDropdown, navigations } from "./NavData";
+import { categories, categoryDropdown } from "./NavData";
 import { useState } from "react";
 import { contactInfo } from "./Data";
 
-const Navbar = () => {
+const Navbar = ({ seo, page }) => {
+    const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
+    const sharedData = usePage().props.localizations;
+
+    const navigations = [
+        {
+            link: route("client.home.index"),
+            text: __("client.navbar_main", sharedData),
+        },
+        {
+            link: route("client.aboutus"),
+            text: __("client.navbar_aboutus", sharedData),
+        },
+        {
+            link: route("client.partners.index"),
+            text: __("client.navbar_partners", sharedData),
+        },
+        {
+            link: route("client.contact.index"),
+            text: __("client.navbar_contact", sharedData),
+        },
+    ];
     const langarr = {
         "ge": 'ქართული',
         "en": 'english'

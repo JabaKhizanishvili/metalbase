@@ -6,7 +6,7 @@ import HeroSlider from "../components/HeroSlider";
 // import img4 from "../assets/images/home/4.png";
 // import img5 from "../assets/images/home/5.png";
 // import { Link } from "react-router-dom";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 import Layout from "../Layouts/Layout";
 import { BiChevronRight } from "react-icons/bi";
 // import PartnerIcon from "/assets/images/icons/svg/partners.svg";
@@ -17,6 +17,8 @@ import { tileSlider, bathroom, doorsHome, partners } from "../components/Data";
 import ProductSlider from "../components/ProductSlider";
 
 const Home = ({ seo, page }) => {
+    const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
+    const sharedData = usePage().props.localizations;
     return (
         <Layout seo={seo}>
             <div>
@@ -124,7 +126,7 @@ const Home = ({ seo, page }) => {
                 </section>
                 <section className="bg-zinc-100 py-10 pb-20">
                     <div className="wrapper">
-                        <Link href="/tiles" className="text-lg  hover:underline">
+                        <Link href={route("client.tiles.index")} className="text-lg  hover:underline">
                             {/* <TilesIcon className="inline-block align-middle mr-2" /> */}
 
                             <img className="inline-block align-middle mr-2" src="/assets/images/icons/svg/tiles.svg" />
@@ -134,7 +136,7 @@ const Home = ({ seo, page }) => {
                     </div>
                 </section>
                 <section className="wrapper py-10">
-                    <Link href="/" className="text-lg  hover:underline">
+                    <Link href={route("client.tiles2.index")} className="text-lg  hover:underline">
                         {/* <DoorIcon className="inline-block align-middle mr-2" /> */}
                         <img className="inline-block align-middle mr-2" src="/assets/images/icons/svg/door.svg" />
                         კარები
