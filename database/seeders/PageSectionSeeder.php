@@ -18,35 +18,40 @@ class PageSectionSeeder extends Seeder
         PageSection::truncate();
         //
         $pages = [
-            [
-                'key' => 'home',
-                'count' => 3,
-            ],
-            [
-                'key' => 'purpose',
-            ],
-            [
-                'key' => 'ethics'
-            ],
-            [
-                'key' => 'politics'
-            ],
-            [
-                'key' => 'services'
-            ],
-            [
-                'key' => 'certification'
-            ],
-            [
-                'key' => 'classification'
-            ],
-            [
-                'key' => 'comprecognition'
-            ],
-            [
-                'key' => 'contact',
-            ]
 
+            [
+                'key' => 'home'
+            ],
+            [
+                'key' => 'aboutus'
+            ],
+            [
+                'key' => 'contact'
+            ],
+            [
+                'key' => 'partners'
+            ],
+            [
+                'key' => 'tiles'
+            ],
+            [
+                'key' => 'tiles2'
+            ],
+            [
+                'key' => 'laminate'
+            ],
+            [
+                'key' => 'doors'
+            ],
+            [
+                'key' => 'bathroom'
+            ],
+            [
+                'key' => 'irons'
+            ],
+            [
+                'key' => 'singleproduct'
+            ],
 
         ];
 

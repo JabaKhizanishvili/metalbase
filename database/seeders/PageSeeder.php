@@ -47,6 +47,9 @@ class PageSeeder extends Seeder
             [
                 'key' => 'irons'
             ],
+            [
+                'key' => 'singleproduct'
+            ],
         ];
 
         // Insert Pages

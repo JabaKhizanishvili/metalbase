@@ -5,15 +5,14 @@ import { partnersPage } from "../components/Data";
 import Layout from "../Layouts/Layout";
 import React from "react";
 
-const Partners = ({ seo, page, partners }) => {
+const Partners = ({ seo, page, partners, images }) => {
     const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
     const sharedData = usePage().props.localizations;
-
     return (
         <Layout seo={seo}>
             <div
                 className="bg-cover bg-no-repeat bg-center text-white pb-32"
-                style={{ backgroundImage: `url('/assets/images/partners/bg.png')` }}
+                style={{ backgroundImage: `url(${images[0]})` }}
             >
                 <div className="wrapper">
                     <div className="block pt-6">

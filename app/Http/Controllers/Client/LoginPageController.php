@@ -186,7 +186,7 @@ class LoginPageController extends Controller
     public function partners(Request $request)
     {
 
-        $page = Page::where('key', 'about')->firstOrFail();
+        $page = Page::where('key', 'partners')->firstOrFail();
 
         $images = [];
         foreach ($page->sections as $sections) {
