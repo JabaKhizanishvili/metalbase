@@ -138,8 +138,7 @@ class LoginPageController extends Controller
     public function aboutus(Request $request)
     {
 
-
-        $page = Page::where('key', 'about')->firstOrFail();
+        $page = Page::where('key', 'aboutus')->firstOrFail();
 
         $images = [];
         foreach ($page->sections as $sections) {
