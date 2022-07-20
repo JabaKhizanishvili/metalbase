@@ -85,18 +85,6 @@
                                             </small>
                                             @enderror
 
-                                            <div class="form-group">
-                                                <label class="form-label">@lang('admin.position')</label>
-                                                <input type="text" name="{{$locale.'[position]'}}" class="form-control" placeholder="@lang('admin.position')" value="{{$staff->translate($locale)->position ?? ''}}">
-                                            </div>
-                                            @error($locale.'.position')
-                                            <small class="text-danger">
-                                                <div class="error">
-                                                    {{$message}}
-                                                </div>
-                                            </small>
-                                            @enderror
-
 
                                         </div>
 

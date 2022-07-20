@@ -15,6 +15,6 @@ class StaffTranslation extends BaseTranslationModel
     // ];
     protected $fillable = [
         'name',
-        'position'
+        // 'position'
     ];
 }

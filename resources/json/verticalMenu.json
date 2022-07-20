@@ -80,6 +80,13 @@
             "i18n": "page",
             "icon": "language",
             "slug": "page"
+        },
+        {
+            "url": "staff.index",
+            "name": "Partners",
+            "i18n": "page",
+            "icon": "language",
+            "slug": "page"
         }
     ],
     "_comment": [

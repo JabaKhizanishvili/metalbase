@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\Staff;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -205,6 +206,7 @@ class LoginPageController extends Controller
         //dd($products);
 
         return Inertia::render('Partners', [
+            'partners' => Staff::with('latestImage')->get(),
             'success' => $request->session()->get('success'),
             "sliders" => $sliders->get(), "page" => $page, "seo" => [
                 "title" => $page->meta_title,

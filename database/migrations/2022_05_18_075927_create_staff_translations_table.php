@@ -21,7 +21,7 @@ class CreateStaffTranslationsTable extends Migration
             $table->string('locale')->index();
 
             $table->string('name')->nullable();
-            $table->string('position')->nullable();
+            // $table->string('position')->nullable();
 
             $table->unique(['staff_id', 'locale']);
             $table->foreign('staff_id')

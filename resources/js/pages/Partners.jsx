@@ -4,7 +4,9 @@ import { partnersPage } from "../components/Data";
 import Layout from "../Layouts/Layout";
 import React from "react";
 
-const Partners = ({ seo, page }) => {
+const Partners = ({ seo, page, partners }) => {
+    console.log(partners);
+
     return (
         <Layout seo={seo}>
             <div
@@ -29,14 +31,20 @@ const Partners = ({ seo, page }) => {
                         </p>
                     </div>
                     <div className="block text-center sm:text-left">
-                        {partnersPage.map((item) => {
+                        {partners.map((item) => {
                             return (
                                 <div
                                     key={item.name}
                                     className="text-center inline-block bg-white mr-3 mb-3 grayscale transition hover:grayscale-0 text-black text-sm h-32 w-60 align-top p-4 overflow-hidden"
                                 >
                                     <div className="h-12  w-auto m-auto flex items-center justify-center mb-2">
-                                        <img src={item.logo} alt="" className="object-contain " />
+                                        {/* <img src={item.logo} alt="" className="object-contain " /> */}
+                                        <img src={item.latest_image != null
+                                            ? "/" +
+                                            item.latest_image.path +
+                                            "/" +
+                                            item.latest_image.title
+                                            : null} alt="" />
                                     </div>
                                     <div className="lowercase">{item.name}</div>
                                 </div>

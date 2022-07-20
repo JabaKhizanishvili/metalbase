@@ -180,8 +180,7 @@ class StaffController extends Controller
 
         //dd($staff->id);
 
-        if($this->staffRepository->update($staff->id, $saveData)){
-
+        if ($this->staffRepository->update($staff->id, $saveData)) {
         }
 
         $this->staffRepository->saveFiles($staff->id, $request);

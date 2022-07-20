@@ -49,8 +49,8 @@ class Staff extends Model
 
     public $translatedAttributes = [
         'name',
-        'position',
-        'slug',
+        // 'position',
+        // 'slug',
     ];
 
     // this adds image
