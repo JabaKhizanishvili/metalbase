@@ -1,13 +1,35 @@
 import { Link, usePage, useForm } from '@inertiajs/inertia-react'
 import React from 'react';
 import { contactInfo } from "./Data";
-import { categories, categoryDropdown, navigations } from "./NavData";
+import { categories, categoryDropdown } from "./NavData";
 import { Form } from "./Shared";
 // import { ReactComponent as Pin } from "/assets/images/icons/svg/pin.svg";
 // import { ReactComponent as Tel } from "/assets/images/icons/svg/tel.svg";
 
 const Footer = () => {
-    const { errors, gphone, gemail, gaddress } = usePage().props;
+    const { errors, gphone, gemail, gaddress, Categories } = usePage().props;
+
+
+    const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
+    const sharedData = usePage().props.localizations;
+    const navigations = [
+        {
+            link: route("client.home.index"),
+            text: __("client.navbar_main", sharedData),
+        },
+        {
+            link: route("client.aboutus"),
+            text: __("client.navbar_aboutus", sharedData),
+        },
+        {
+            link: route("client.partners.index"),
+            text: __("client.navbar_partners", sharedData),
+        },
+        {
+            link: route("client.contact.index"),
+            text: __("client.navbar_contact", sharedData),
+        },
+    ];
 
     return (
         <div className="bg-custom-blue-900 py-10 sm:pb-20 text-white">
@@ -46,14 +68,16 @@ const Footer = () => {
                                 })}
                             </div>
                             <div className="mt-7">
-                                {categories.map((item, index) => {
+                                {Categories.map((item, index) => {
+                                    console.log(item.files[0]);
                                     return (
-                                        <Link key={index} href={item.link}>
+                                        <Link key={index} href={route('client.category.show', item.slug)}>
                                             <div className="relative block w-72 mb-1 text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1] border border-white/[0.1] ">
                                                 <div className="absolute left-4 top-1/2 -translate-y-1/2">
-                                                    {item.icon}
+                                                    {/* {item.icon} */}
+                                                    <img src={`${item.files[0].path}/${item.files[0].title}`} alt="err" />
                                                 </div>
-                                                {item.text}
+                                                {item.title}
                                             </div>
                                         </Link>
                                     );

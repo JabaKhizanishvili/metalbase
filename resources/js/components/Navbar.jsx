@@ -15,6 +15,7 @@ import { contactInfo } from "./Data";
 const Navbar = ({ seo, page }) => {
 
     const { Categories } = usePage().props;
+
     const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
     const sharedData = usePage().props.localizations;
 
@@ -188,7 +189,6 @@ const Navbar = ({ seo, page }) => {
 
 
                             {Categories.map((link, i) => {
-                                console.log(link.children);
                                 return (
                                     <Link className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1]" key={i} href={route('client.category.show', link.slug)}>
                                         {link.title}

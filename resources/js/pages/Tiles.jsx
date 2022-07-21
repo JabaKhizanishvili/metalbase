@@ -45,7 +45,7 @@ const Tiles = ({ seo, page, products, name }) => {
             <Link href={links[0].url}>
                 {/* <Arrow color="#2F3E51" rotate="90" /> */}
                 <button className="arrow" style={{ transform: "rotate(-90deg)" }}>
-                    <ArrowDown color="#1DBFCC" />
+                    {/* <ArrowDown color="#1DBFCC" /> */}
                 </button>
                 {/* <Arrow color="#2F3E51" rotate="90" /> */}
 
@@ -64,7 +64,7 @@ const Tiles = ({ seo, page, products, name }) => {
                 {/* <Arrow color="#2F3E51" rotate="-90" /> */}
                 {/* <Arrow color="#2F3E51" rotate="-90" /> */}
                 <button className="arrow" style={{ transform: "rotate(90deg)" }}>
-                    <ArrowDown color="#1DBFCC" />
+                    {/* <ArrowDown color="#1DBFCC" /> */}
                 </button>
             </Link>
         ) : null;
@@ -174,10 +174,17 @@ const Tiles = ({ seo, page, products, name }) => {
                     </div>
 
 
-                    {/* <div className="pb-20 flex items-center justify-center pagination flex centered">
-                        {linksPrev(product.links)}
-                        <button className="pageNum">{links(product.links)}</button>
-                        {linksNext(product.links)}
+                    <div className="pb-20 flex items-center justify-center">
+                        {linksPrev(products.links)}
+                        <button className="mx-1 opacity-100">{links(products.links)}</button>
+                        {linksNext(products.links)}
+                    </div>
+
+                    {/* <div className="pb-20 flex items-center justify-center">
+                        <button className="mx-1 opacity-100">1</button>
+                        <button className="mx-1 opacity-50">2</button>
+                        <button className="mx-1 opacity-50">3</button>
+                        <button className="mx-1 opacity-50">4</button>
                     </div> */}
                 </div>
             </div>
