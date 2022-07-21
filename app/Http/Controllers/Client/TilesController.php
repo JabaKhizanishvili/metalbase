@@ -21,7 +21,7 @@ class TilesController extends Controller
     public function index()
     {
 
-
+        // dd('asdasd');
         $page = Page::where('key', 'home')->firstOrFail();
 
         $images = [];

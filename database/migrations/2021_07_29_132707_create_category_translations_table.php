@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  database/migrations/2021_07_29_132707_create_category_translations_table.php
  *
@@ -7,7 +6,6 @@
  * Time: 17:29
  * @author Insite LLC <hello@insite.international>
  */
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -26,10 +24,10 @@ class CreateCategoryTranslationsTable extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->string('locale')->index();
 
-            $table->string('name')->nullable();
-            // $table->longText('description')->nullable();
+            $table->string('title')->nullable();
+            $table->longText('description')->nullable();
 
-            $table->unique(['category_id', 'locale']);
+            $table->unique(['category_id','locale']);
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')

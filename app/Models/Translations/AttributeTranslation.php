@@ -3,9 +3,9 @@
 namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class CategoryTranslation extends BaseTranslationModel
+
+class AttributeTranslation extends BaseTranslationModel
 {
     use HasFactory;
 
@@ -13,7 +13,6 @@ class CategoryTranslation extends BaseTranslationModel
      * @var string[]
      */
     protected $fillable = [
-        'title',
-        'description',
+        'name'
     ];
 }

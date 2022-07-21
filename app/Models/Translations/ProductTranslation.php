@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  app/Models/Translations/ProductTranslation.php
  *
@@ -7,7 +6,6 @@
  * Time: 10:34
  * @author Insite LLC <hello@insite.international>
  */
-
 namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,11 +20,10 @@ class ProductTranslation extends BaseTranslationModel
      */
     protected $fillable = [
         'title',
+        'short_description',
         'description',
-        'brand_id',
-        'category_id',
-        'width',
-        'height',
-        'madein',
+        'meta_title',
+        'meta_description',
+        'meta_keyword',
     ];
 }

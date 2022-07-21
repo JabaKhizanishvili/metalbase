@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  app/Models/Category.php
  *
@@ -7,7 +6,6 @@
  * Time: 10:32
  * @author Insite LLC <hello@insite.international>
  */
-
 namespace App\Models;
 
 use App\Models\Translations\CategoryTranslation;
@@ -61,7 +59,7 @@ use Kalnoy\Nestedset\NodeTrait;
  */
 class Category extends Model
 {
-    use Translatable, HasFactory, ScopeFilter;
+    use Translatable, HasFactory, ScopeFilter, NodeTrait;
 
 
     /**
@@ -73,12 +71,11 @@ class Category extends Model
      * @var string[]
      */
     protected $fillable = [
-        // 'category_id',
-        // 'slug',
-        // 'position',
-        // 'status',
-        // 'parent_id'
-        'name'
+        'category_id',
+        'slug',
+        'position',
+        'status',
+        'parent_id'
     ];
 
     /** @var string */
@@ -86,30 +83,31 @@ class Category extends Model
 
     /** @var array */
     public $translatedAttributes = [
-        // 'title',
-        // 'description'
-        'name'
+        'title',
+        'description'
     ];
 
 
-    // protected $with = ['translations'];
+    protected $with = ['translations'];
 
 
 
-    //    public function scopeFilter($query, array $filters)
-    //    {
-    ////        $category = $filters["category"];
-    //        $query->when($filters["category"] ?? false, function () use ($query) {
-    ////            dd($category->get());
-    ////            dd($query);
-    //            return $query->where("id", $filters["category"])->get();
-    ////            return $query->whereHas("category", function () use ($query, $category) {
-    ////                return $query->where("slug", $category);
-    ////            }
-    ////            );
-    //        }
-    //        );
-    //    }
+//    public function scopeFilter($query, array $filters)
+//    {
+////        $category = $filters["category"];
+//        $query->when($filters["category"] ?? false, function () use ($query) {
+////            dd($category->get());
+////            dd($query);
+//            return $query->where("id", $filters["category"])->get();
+////            return $query->whereHas("category", function () use ($query, $category) {
+////                return $query->where("slug", $category);
+////            }
+////            );
+//        }
+//        );
+//
+//
+//    }
 
     public function getFilterScopes(): array
     {
@@ -128,10 +126,9 @@ class Category extends Model
             ]
         ];
     }
-
-    public function products(): hasMany
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsToMany(Product::class,'product_categories');
     }
 
 
@@ -150,4 +147,6 @@ class Category extends Model
     {
         return $this->morphOne(File::class, 'fileable');
     }
+
+
 }

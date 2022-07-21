@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  app/Http/Requests/Admin/ProductRequest.php
  *
@@ -42,10 +41,10 @@ class ProductRequest extends FormRequest
         }
 
         return [
-            // 'slug' => ['required', 'alpha_dash', Rule::unique('products', 'slug')->ignore($this->product)],
-            // config('translatable.fallback_locale') . '.title' => 'required',
-            // 'code' => ['required'],
-            // 'categories' => ['required']
+            'slug' => ['required', 'alpha_dash', Rule::unique('products', 'slug')->ignore($this->product)],
+            config('translatable.fallback_locale') . '.title' => 'required',
+            'code' => ['required'],
+            'categories' => ['required']
 
 
         ];

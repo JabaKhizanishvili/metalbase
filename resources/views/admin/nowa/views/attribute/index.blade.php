@@ -8,12 +8,12 @@
 
 @section('content')
 
-{{--@dd($categories)--}}
+
 
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">@lang('admin.products')</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">@lang('admin.attributes')</span>
         </div>
         <div class="justify-content-center mt-2">
             @include('admin.nowa.views.layouts.components.breadcrump')
@@ -27,9 +27,10 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                        <h4 class="card-title mg-b-0">@lang('admin.products')</h4>
+                        <h4 class="card-title mg-b-0">@lang('admin.attributes')</h4>
                     </div>
-                    <a href="{{locale_route('product.create')}}" class="btn ripple btn-primary" type="button">@lang('admin.createbutt')</a>
+
+                    <a href="{{locale_route('attribute.create')}}" class="btn ripple btn-primary" type="button">@lang('admin.create')</a>
                     {{--<p class="tx-12 tx-gray-500 mb-2">Example of Nowa Simple Table. <a href="">Learn more</a></p>--}}
                 </div>
                 <div class="card-body">
@@ -39,9 +40,8 @@
                                 <thead>
                                 <tr>
                                     <th>@lang('admin.id')</th>
-                                    <th>@lang('admin.category')</th>
-                                    <th>@lang('admin.status')</th>
-                                    <th>@lang('admin.title')</th>
+                                    <th>@lang('admin.attribute_code')</th>
+                                    <th>@lang('admin.name')</th>
                                     <th>@lang('admin.actions')</th>
                                 </tr>
                                 </thead>
@@ -53,42 +53,28 @@
                                                value="{{Request::get('id')}}"
                                                class="validate {{$errors->has('id') ? '' : 'valid'}}">
                                     </th>
-                                    <th>
-                                        <select class="form-control" name="category_id" onchange="this.form.submit()">
-                                            <option value="" {{Request::get('category_id') === '' ? 'selected' :''}}>@lang('admin.any')</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{$category->id}}" {{Request::get('category_id') == $category->id ? 'selected' :''}}>{{$category->title}}</option>
-                                            @endforeach
 
-                                        </select>
-                                    </th>
                                     <th>
-                                        <select class="form-control" name="status" onchange="this.form.submit()">
-                                            <option value="" {{Request::get('status') === '' ? 'selected' :''}}>@lang('admin.any')</option>
-                                            <option value="1" {{Request::get('status') === '1' ? 'selected' :''}}>@lang('admin.active')</option>
-                                            <option value="0" {{Request::get('status') === '0' ? 'selected' :''}}>@lang('admin.not_active')</option>
-                                        </select>
-                                    </th>
-                                    <th>
-                                        <input class="form-control" type="text" name="title" onchange="this.form.submit()"
-                                               value="{{Request::get('title')}}"
-                                               class="validate {{$errors->has('title') ? '' : 'valid'}}">
+                                        <input class="form-control" type="text" name="code" onchange="this.form.submit()"
+                                               value="{{Request::get('code')}}"
+                                               class="validate {{$errors->has('code') ? '' : 'valid'}}">
                                     </th>
 
-                                @if($data)
-                                    @foreach($data as $item)
+                                    <th>
+                                        <input class="form-control" type="text" name="name" onchange="this.form.submit()"
+                                               value="{{Request::get('name')}}"
+                                               class="validate {{$errors->has('value') ? '' : 'valid'}}">
+                                    </th>
+                                    <th></th>
+                                </tr>
+
+                                @if($attributes)
+                                    @foreach($attributes as $attribute)
                                         <tr>
-                                            <th scope="row">{{$item->id}}</th>
-                                            <td></td>
+                                            <td>{{$attribute->id}}</td>
 
-                                            <td>
+                                            <td>{{$attribute->code}}</td>
 
-                                                @if($item->status)
-                                                    <span class="green-text">@lang('admin.active')</span>
-                                                @else
-                                                    <span class="red-text">@lang('admin.not_active')</span>
-                                                @endif
-                                            </td>
                                             <td>
                                                 <div class="panel panel-primary tabs-style-2">
                                                     <div class=" tab-menu-heading">
@@ -96,7 +82,7 @@
                                                             <!-- Tabs -->
                                                             <ul class="nav panel-tabs main-nav-line">
                                                                 @foreach(config('translatable.locales') as $locale)
-                                                                    <li><a href="#cat-{{$locale}}-{{$item->id}}" class="nav-link {{$loop->first?"active":""}}" data-bs-toggle="tab">{{$locale}}</a></li>
+                                                                    <li><a href="#cat-{{$locale}}-{{$attribute->id}}" class="nav-link {{$loop->first?"active":""}}" data-bs-toggle="tab">{{$locale}}</a></li>
                                                                 @endforeach
 
                                                             </ul>
@@ -106,8 +92,8 @@
                                                         <div class="tab-content">
 
                                                             @foreach(config('translatable.locales') as $locale)
-                                                                <div class="tab-pane {{$loop->first?"active":""}}" id="cat-{{$locale}}-{{$item->id}}">
-                                                                    {{$item->translate($locale)->title ?? ''}}
+                                                                <div class="tab-pane {{$loop->first?"active":""}}" id="cat-{{$locale}}-{{$attribute->id}}">
+                                                                    {{$attribute->translate($locale)->name ?? ''}}
                                                                 </div>
                                                             @endforeach
 
@@ -116,18 +102,22 @@
                                                 </div>
 
                                             </td>
+
                                             <td>
 
-                                                <a href="{{locale_route('product.edit',$item->id)}}"
-                                                   class="pl-3">
-                                                    <i class="fa fa-edit">შეცვლა</i>
-                                                </a>
-                                                <a href="{{locale_route('product.destroy',$item->id)}}"
-                                                   onclick="return confirm('Are you sure?')" class="pl-3">
-                                                    <i class="fa fa-edit">წაშლა</i>
-                                                </a>
-                                            </td>
 
+                                                <a href="{{locale_route('attribute.edit',$attribute->id)}}"
+                                                   class="pl-3">
+                                                    <i class="fa fa-edit">@lang('admin.edit_button')</i>
+                                                </a>
+
+                                                <a href="{{locale_route('attribute.destroy',$attribute->id)}}"
+                                                   class="pl-3">
+                                                    <i class="fa fa-edit">@lang('admin.delete_button')</i>
+                                                </a>
+
+
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -142,7 +132,7 @@
         </div>
         <!--/div-->
 
-        {{ $data->appends(request()->input())->links('admin.vendor.pagination.material') }}
+        {{ $attributes->appends(request()->input())->links('admin.vendor.pagination.material') }}
     </div>
     <!-- /row -->
 
@@ -150,6 +140,29 @@
 
 @section('scripts')
 
-
+<script>
+    $('[data-setting]').click(function (e){
+        let $this = $(this);
+       let id = $(this).data('setting');
+       let active = 0;
+       if($(this).is(':checked')) active = 1;
+       //alert(id);
+        $.ajax({
+            url: '{{locale_route('setting.active')}}',
+            data: { id:id, active: active, _token: '{{csrf_token()}}' },
+            type: 'get',
+            beforeSend: function (){
+                $this.prop('disabled',true);
+            },
+            success: function (data){
+                $this.prop('disabled',false);
+            },
+            error: function (){
+                $this.prop('disabled',true);
+                alert('error');
+            }
+        });
+    });
+</script>
 
 @endsection

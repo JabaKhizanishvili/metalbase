@@ -1,29 +1,59 @@
 {
     "menu": [
         {
+            "url": "javascript:void(0)",
+            "name": "პროდუქცია",
+            "i18n": "language",
+            "icon": "language",
+            "slug": "language",
+            "submenu": [
+                {
+                    "url": "category.index",
+                    "name": "კატეგორიები",
+                    "i18n": "category",
+                    "icon": "language",
+                    "slug": "category"
+                },
+                {
+                    "url": "product.index",
+                    "name": "პროდუქცია",
+                    "i18n": "product",
+                    "icon": "language",
+                    "slug": "product"
+                },
+                {
+                    "url": "attribute.index",
+                    "name": "ატრიბუტები",
+                    "i18n": "attributes",
+                    "icon": "language",
+                    "slug": "attribute"
+                }
+            ]
+        },
+        {
             "url": "page.index",
-            "name": "Pages",
+            "name": "გვერდები",
             "i18n": "page",
             "icon": "language",
             "slug": "page"
         },
         {
             "url": "javascript:void(0)",
-            "name": "Language Settings",
+            "name": "ენები",
             "i18n": "language",
             "icon": "language",
             "slug": "language",
             "submenu": [
                 {
                     "url": "language.index",
-                    "name": "Languages",
+                    "name": "ენის დამატება",
                     "i18n": "language",
                     "icon": "language",
                     "slug": "language"
                 },
                 {
                     "url": "translation.index",
-                    "name": "Translations",
+                    "name": "თარგმნა",
                     "i18n": "translation",
                     "icon": "g_translate",
                     "slug": "translation"
@@ -32,58 +62,28 @@
         },
         {
             "url": "setting.index",
-            "name": "Settings",
+            "name": "პარამეტრები",
             "i18n": "setting",
             "icon": "language",
             "slug": "setting"
         },
         {
             "url": "password.index",
-            "name": "Change Password",
+            "name": "პაროლის შეცვლა",
             "i18n": "change password",
             "icon": "g_translate",
             "slug": "change_password"
         },
         {
-            "url": "javascript:void(0)",
-            "name": "Products",
-            "i18n": "language",
-            "icon": "language",
-            "slug": "language",
-            "submenu": [
-                {
-                    "url": "product.index",
-                    "name": "Products",
-                    "i18n": "change password",
-                    "icon": "g_translate",
-                    "slug": "change_password"
-                },
-                {
-                    "url": "category.index",
-                    "name": "Categories",
-                    "i18n": "change password",
-                    "icon": "g_translate",
-                    "slug": "change_password"
-                },
-                {
-                    "url": "brand.index",
-                    "name": "Brands",
-                    "i18n": "change password",
-                    "icon": "g_translate",
-                    "slug": "change_password"
-                }
-            ]
-        },
-        {
             "url": "slider.index",
-            "name": "Slider",
+            "name": "სლაიდერი",
             "i18n": "page",
             "icon": "language",
             "slug": "page"
         },
         {
             "url": "staff.index",
-            "name": "Partners",
+            "name": "პარტნიორები",
             "i18n": "page",
             "icon": "language",
             "slug": "page"

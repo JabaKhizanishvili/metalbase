@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  app/Repositories/CategoryRepositoryInterface.php
  *
@@ -7,7 +6,6 @@
  * Time: 17:44
  * @author Insite LLC <hello@insite.international>
  */
-
 namespace App\Repositories;
 
 
@@ -20,4 +18,10 @@ use App\Models\Category;
  */
 interface CategoryRepositoryInterface
 {
+
+    /**
+     * @param \App\Http\Requests\Admin\CategoryRequest $request
+     * @param array $with
+     */
+    public function getData(CategoryRequest $request, array $with = []);
 }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  database/migrations/2021_07_30_062930_create_product_translations_table.php
  *
@@ -7,7 +6,6 @@
  * Time: 10:29
  * @author Insite LLC <hello@insite.international>
  */
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,14 +25,13 @@ class CreateProductTranslationsTable extends Migration
             $table->string('locale')->index();
 
             $table->string('title')->nullable();
+            $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
-            $table->string('brand_id')->nullable();
-            $table->string('category_id')->nullable();
-            $table->string('width')->nullable();
-            $table->string('height')->nullable();
-            $table->string('madein')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keyword')->nullable();
 
-            $table->unique(['product_id', 'locale']);
+            $table->unique(['product_id','locale']);
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')

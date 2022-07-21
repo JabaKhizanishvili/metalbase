@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -57,7 +58,7 @@ use Spatie\Searchable\SearchResult;
  */
 class Product extends Model implements Searchable
 {
-    use Translatable, HasFactory, ScopeFilter;
+    use SoftDeletes, Translatable, HasFactory, ScopeFilter;
 
     /**
      * @var string
@@ -68,10 +69,21 @@ class Product extends Model implements Searchable
      * @var string[]
      */
     protected $fillable = [
-        'width',
-        'heigth',
-        'brand_id',
-        'category_id',
+        'slug',
+        'status',
+        'popular',
+        'sale',
+        'stock',
+        'code',
+        'price',
+        'quantity',
+        'special_price',
+        'new',
+        'new_collection',
+        'bunker',
+        'day_price',
+        'day_product',
+        'special_price_tag'
     ];
 
     /** @var string */
@@ -82,12 +94,11 @@ class Product extends Model implements Searchable
     /** @var array */
     public $translatedAttributes = [
         'title',
+        'short_description',
         'description',
-        'brand_id',
-        'category_id',
-        'width',
-        'height',
-        'madein',
+        'meta_title',
+        'meta_description',
+        'meta_keyword',
     ];
 
     //protected $with = ['translation'];
@@ -137,16 +148,17 @@ class Product extends Model implements Searchable
     /**
      * The categories that belong to the product.
      */
-
-
-    public function categories(): BelongsTo
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'product_categories');
     }
 
-    public function brands(): BelongsTo
+    /**
+     * Get the product attribute values that owns the product.
+     */
+    public function attribute_values(): HasMany
     {
-        return $this->belongsTo(Brands::class);
+        return $this->hasMany(ProductAttributeValue::class);
     }
 
     /**
@@ -157,16 +169,16 @@ class Product extends Model implements Searchable
         return $this->morphMany(File::class, 'fileable');
     }
 
-    public function latestImage()
-    {
-        return $this->morphOne(File::class, 'fileable')->latestOfMany();
-    }
-
-
     /**
      * @return MorphOne
      */
     public function file(): MorphOne
+    {
+        return $this->morphOne(File::class, 'fileable');
+    }
+
+
+    public function latestImage()
     {
         return $this->morphOne(File::class, 'fileable');
     }

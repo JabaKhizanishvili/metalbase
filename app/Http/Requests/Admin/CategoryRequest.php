@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  app/Http/Requests/Admin/CategoryRequest.php
  *
@@ -43,8 +42,9 @@ class CategoryRequest extends FormRequest
         }
 
         return [
-            // config('translatable.fallback_locale') . '.title' => 'required',
-            // 'slug' => ['required', 'alpha_dash', Rule::unique('categories', 'slug')->ignore($this->category)],
+            config('translatable.fallback_locale') . '.title' => 'required',
+            'slug' => ['required', 'alpha_dash', Rule::unique('categories', 'slug')->ignore($this->category)],
         ];
+
     }
 }

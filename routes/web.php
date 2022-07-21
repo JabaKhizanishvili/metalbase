@@ -58,18 +58,25 @@ Route::prefix('{locale?}')
                 // Category
                 Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
                 Route::get('category/{category}/destroy', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('category.destroy');
+                //
+                // Product
+                Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
+                Route::get('product/{product}/destroy', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('product.destroy');
 
                 // brands
                 Route::resource('brand', \App\Http\Controllers\Admin\BrandController::class);
                 Route::get('brand/{brand}/destroy', [\App\Http\Controllers\Admin\BrandController::class, 'destroy'])->name('brand.destroy');
                 //
 
+                Route::resource('attribute', \App\Http\Controllers\Admin\AttributeController::class);
+                Route::get('attribute/{attribute}/destroy', [\App\Http\Controllers\Admin\AttributeController::class, 'destroy'])->name('attribute.destroy');
+
                 Route::resource('staff', \App\Http\Controllers\Admin\StaffController::class);
                 Route::get('staff/{staff}/destroy', [\App\Http\Controllers\Admin\StaffController::class, 'destroy'])->name('staff.destroy');
 
-                // Product
-                Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
-                Route::get('product/{product}/destroy', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('product.destroy');
+                // // Product
+                // Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
+                // Route::get('product/{product}/destroy', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('product.destroy');
 
                 // Slider
                 Route::resource('slider', SliderController::class);

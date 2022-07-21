@@ -1,36 +1,4 @@
-<?php
-$_checked = ($category and $category->parent_id == null) ? ' checked':'';
 
-$traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
-
-        //dd($categories);
-
-
-    $html = '<ul style="margin: initial !important;padding: initial !important;">';
-
-    foreach ($categories as $_category) {
-        $checked = ($category and $_category->id == $category->parent_id) ? 'checked':'';
-        $html .= '<li style="margin-bottom: 5px"><label class="rdiobox">
-                        <input type="radio" name="parent_id" data-checkboxes="mygroup" class="custom-control-input" '. $checked .' id="'.$_category->id.'" value="'.$_category->id.'">
-                        <span style="margin-left: 15px">'.$_category->title.'</span>
-
-                        </label></li>';
-
-
-        if(count($_category->children)){
-            $html .= '<li style="padding-left: 20px">';
-            $html .= $traverse($_category->children, $prefix.'-');
-            $html .= '</li>';
-        }
-
-    }
-
-    $html .= '</ul>';
-
-    return $html;
-};
-
-?>
 @extends('admin.nowa.views.layouts.app')
 
 @section('styles')
@@ -59,43 +27,39 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$category->created_at ? __('admin.category-update') : __('admin.category-create')}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$attribute->created_at ? __('admin.attribute-update') : __('admin.attribute-create')}}</span>
         </div>
         <div class="justify-content-center mt-2">
             @include('admin.nowa.views.layouts.components.breadcrump')
         </div>
     </div>
     <!-- /breadcrumb -->
-    <input name="old-images[]" id="old_images" hidden disabled value="{{$category->files}}">
+    <input name="old-images[]" id="old_images" hidden disabled value="{{$attribute->files}}">
     <!-- row -->
-    {!! Form::model($category,['url' => $url, 'method' => $method,'files' => true]) !!}
+    {!! Form::model($attribute,['url' => $url, 'method' => $method,'files' => true]) !!}
     <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div>
-                        <h6 class="card-title mb-1">@lang('admin.productcatergories')</h6>
+                        <h6 class="card-title mb-1">@lang('admin.attribute')</h6>
                     </div>
-                    <div class="mb-4">
-                        <p class="mg-b-10">@lang('admin.catparent')</p>
 
-                        <ul>
-                            <li style="margin-bottom: 5px"><label class="rdiobox">
-                                    <input type="radio" name="parent_id" data-checkboxes="mygroup" class="custom-control-input" <?=$_checked;?> value="0">
-                                    <span style="margin-left: 15px">-none-</span>
-
-                                </label></li>
-                            <li>
-                                <ul>
-                                    <li>
-                                        <?=$traverse($categories);?>
-                                    </li>
-                                </ul>
-
-                            </li>
-                        </ul>
-
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.attribute_code')</label>
+                        <input {{$attribute->created_at ? 'disabled' : ''}} class="form-control" type="text" name="code" value="{{$attribute->code}}">
+                        @if($attribute->created_at)
+                            <input type="hidden" name="code" value="{{$attribute->code}}">
+                        @endif
+                        @error('code')
+                        <small class="text-danger">
+                            <div class="error">
+                                {{$message}}
+                            </div>
+                        </small>
+                        @enderror
                     </div>
+
                     <div class="mb-4">
                         <p class="mg-b-10">@lang('admin.title')</p>
                         <div class="panel panel-primary tabs-style-2">
@@ -126,7 +90,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                                         ?>
                                         <div class="tab-pane {{$active}}" id="lang-{{$locale}}">
                                             <div class="form-group">
-                                                <input type="text" name="{{$locale.'[title]'}}" class="form-control" placeholder="@lang('admin.title')" value="{{$category->translate($locale)->title ?? ''}}">
+                                                <input type="text" name="{{$locale.'[name]'}}" class="form-control" placeholder="@lang('admin.title')" value="{{$attribute->translate($locale)->name ?? ''}}">
                                             </div>
                                             @error($locale.'.title')
                                             <small class="text-danger">
@@ -144,28 +108,88 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                         </div>
 
                     </div>
+
                     <div class="form-group">
-                        <label class="form-label">@lang('admin.slug')</label>
-                        <input type="text" name="slug" class="form-control" placeholder="@lang('admin.slug')" value="{{$category->slug ?? ''}}">
+                        <label class="form-label">@lang('admin.position')</label>
+                        <input class="form-control" type="number" name="position" value="{{$attribute->position}}">
                     </div>
-                    @error('slug')
-                    <small class="text-danger">
-                        <div class="error">
-                            {{$message}}
-                        </div>
-                    </small>
-                    @enderror
-                    <div class="form-group mb-0 justify-content-end">
-                        <div class="checkbox">
-                            <div class="custom-checkbox custom-control">
-                                <input type="checkbox" data-checkboxes="mygroup" name="status" class="custom-control-input" id="checkbox-2" {{$category->status ? 'checked' : ''}}>
-                                <label for="checkbox-2" class="custom-control-label mt-1">{{__('admin.status')}}</label>
+
+                    <?php
+
+                    $types = ['select','boolean']
+
+                    ?>
+
+                    <div class="form-group">
+                        <label class="form-label">@lang('admin.input_type')</label>
+                        <select {{$attribute->created_at ? 'disabled' : ''}} name="type" class="form-control">
+                            @foreach($types as $type)
+                            <option value="{{$type}}"{{$attribute->type == $type ? ' selected':''}}>{{ucfirst($type)}}</option>
+                            @endforeach
+                        </select>
+                        @if($attribute->created_at)
+                            <input type="hidden" name="type" value="{{$attribute->type}}">
+                        @endif
+                        @error('type')
+                        <small class="text-danger">
+                            <div class="error">
+                                {{$message}}
                             </div>
-                        </div>
+                        </small>
+                        @enderror
                     </div>
+
+                    <div class="row" id="option_row"{!!$attribute->type == 'boolean' ? ' style="display:none"' : ' style="display:block"'!!}>
+                        <div class="col-12">
+                            <div class="main-content-label mg-b-5">
+                                @lang('admin.options')
+                            </div>
+                            <div class="form-group">
+                                <table id="options">
+                                    <tr>
+                                        @foreach(config('translatable.locales') as $locale)
+
+
+                                            <th>
+                                                @lang('admin.label') - {{$locale}}
+                                            </th>
+                                        @endforeach
+                                    </tr>
+
+                                    <?php
+                                    $i = 1;
+                                    ?>
+                                    @foreach($attribute->options as $item)
+                                        <tr>
+                                            <input type="hidden" name="options[{{$item->id}}][isNew]" value="false">
+                                            <input type="hidden" name="options[{{$item->id}}][isDelete]" value="false">
+                                            @foreach(config('translatable.locales') as $locale)
+
+
+                                                <td>
+                                                    <input class="form-control" type="text" name="options[{{$item->id}}][{{$locale}}][label]" value="{{$item->translate($locale)->label}}">
+                                                </td>
+
+                                            @endforeach
+                                            <td>
+                                                <a href="javascript:void(0);" class="del-option"><i class="fa fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+
+                                </table>
+
+
+                            </div>
+                            <button type="button" id="add_option_btn">add option</button>
+                        </div>
+
+                    </div>
+
                     <div class="form-group mb-0 mt-3 justify-content-end">
                         <div>
-                            {!! Form::submit($category->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit($attribute->created_at ? __('admin.update') : __('admin.create'),['class' => 'btn btn-primary']) !!}
                         </div>
                     </div>
 
@@ -175,27 +199,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
 
     </div>
 
-    <!-- /row -->
-    <!-- row -->
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="input-images"></div>
-                    @if ($errors->has('images'))
-                        <span class="help-block">
-                                            {{ $errors->first('images') }}
-                                        </span>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- row closed -->
 
-    <!-- /row -->
-
-    <!-- row -->
 
     <!-- row closed -->
     {!! Form::close() !!}
@@ -261,6 +265,53 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
         } else {
             $('.input-images').imageUploader();
         }
+
+        let locales = @json(config('translatable.locales'));
+
+
+        let ind = 1;
+
+        $('#add_option_btn').click(function (){
+            let tr = $('<tr></tr>');
+            tr.append('<input type="hidden" name="options[option_'+ ind +'][isNew]" value="true">');
+            tr.append('<input type="hidden" name="options[option_'+ ind +'][isDelete]" value="false">');
+            Object.keys(locales).map((name, index) => {
+
+              
+
+                tr.append('<td> <input class="form-control" type="text" name="options[option_'+ ind +']['+ locales[name] +'][label]" value=""> </td>');
+
+            })
+
+            tr.append('<td><a href="javascript:void(0);" class="del-option"><i class="fa fa-trash-alt"></i></a></td>');
+
+            $('#options').append(tr);
+
+            ind++
+
+        });
+
+        $(document).on('click','.del-option',function (e){
+
+            let input = $(this).parents('tr').find('input[type=hidden]');
+         
+            if(input[0].value === 'true'){
+                $(this).parents('tr').remove();
+            } else {
+                $(this).parents('tr').hide();
+                input[1].value = 'true';
+            }
+        });
+
+        $('select[name=type]').change(function (e){
+            let value = $(this).val();
+          
+            if(value == 'select'){
+                $('#option_row').show();
+            } else {
+                $('#option_row').hide();
+            }
+        });
     </script>
 
 @endsection
