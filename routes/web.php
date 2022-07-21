@@ -118,6 +118,8 @@ Route::prefix('{locale?}')
             Route::get('', [HomeController::class, 'index'])->name('client.home.index');
 
 
+            Route::get('category/{category}', [\App\Http\Controllers\Client\CategoryController::class, 'show'])->name('client.category.show');
+
             Route::get('/register', [LoginPageController::class, 'Register'])->name('client.register');
             Route::post('/registeruser', [App\Http\Controllers\Auth\AuthFrontendCostumController::class, 'register'])->name('register');
 

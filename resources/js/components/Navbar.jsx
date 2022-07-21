@@ -13,6 +13,8 @@ import { useState } from "react";
 import { contactInfo } from "./Data";
 
 const Navbar = ({ seo, page }) => {
+
+    const { Categories } = usePage().props;
     const renderHTML = (rawHTML) => React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
     const sharedData = usePage().props.localizations;
 
@@ -114,6 +116,7 @@ const Navbar = ({ seo, page }) => {
                                         </Link>
                                     );
                                 })}
+
                             </div>
                         </div>
                         <div className="flex items-center">
@@ -153,7 +156,7 @@ const Navbar = ({ seo, page }) => {
                 <div className="bg-white box-border">
                     <div className="wrapper flex justify-between items-center ">
                         <div>
-                            <div className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1] box-border group cursor-pointer relative ">
+                            {/* <div className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1] box-border group cursor-pointer relative ">
                                 {__("client.navbar_irons", sharedData)}
                                 <BiChevronDown className="inline-block -mt-1 transition group-hover:rotate-180" />
                                 <div className="absolute lg:left-0 left-1/2 -translate-x-1/2 lg:translate-x-0 top-full bg-white py-5 px-3 z-40 transition opacity-0 invisible translate-y-5 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0  lg:border-transparent border-custom-blue-500/[.1] border">
@@ -169,13 +172,26 @@ const Navbar = ({ seo, page }) => {
                                         );
                                     })}
                                 </div>
-                            </div>
-                            {categories.map((item, index) => {
+                            </div> */}
+                            {/* {Categories.map((item, index) => {
                                 return (
-                                    <Link key={index} href={item.link}>
-                                        <div className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1]">
-                                            {item.text}
-                                        </div>
+                                    // <Link key={index} href={item.link}>
+                                    //     <div className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1]">
+                                    //         {item.text}
+                                    //     </div>
+                                    // </Link>
+                                    <div className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1]">
+                                        {item.title}
+                                    </div>
+                                );
+                            })} */}
+
+
+                            {Categories.map((link, i) => {
+                                console.log(link.children);
+                                return (
+                                    <Link className="lg:inline-block block text-center px-4 lg:py-5 py-3 whitespace-nowrap  hover:bg-custom-blue-500/[.1]" key={i} href={route('client.category.show', link.slug)}>
+                                        {link.title}
                                     </Link>
                                 );
                             })}

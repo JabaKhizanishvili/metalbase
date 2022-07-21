@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  app/Models/Category.php
  *
@@ -6,6 +7,7 @@
  * Time: 10:32
  * @author Insite LLC <hello@insite.international>
  */
+
 namespace App\Models;
 
 use App\Models\Translations\CategoryTranslation;
@@ -92,22 +94,22 @@ class Category extends Model
 
 
 
-//    public function scopeFilter($query, array $filters)
-//    {
-////        $category = $filters["category"];
-//        $query->when($filters["category"] ?? false, function () use ($query) {
-////            dd($category->get());
-////            dd($query);
-//            return $query->where("id", $filters["category"])->get();
-////            return $query->whereHas("category", function () use ($query, $category) {
-////                return $query->where("slug", $category);
-////            }
-////            );
-//        }
-//        );
-//
-//
-//    }
+    //    public function scopeFilter($query, array $filters)
+    //    {
+    ////        $category = $filters["category"];
+    //        $query->when($filters["category"] ?? false, function () use ($query) {
+    ////            dd($category->get());
+    ////            dd($query);
+    //            return $query->where("id", $filters["category"])->get();
+    ////            return $query->whereHas("category", function () use ($query, $category) {
+    ////                return $query->where("slug", $category);
+    ////            }
+    ////            );
+    //        }
+    //        );
+    //
+    //
+    //    }
 
     public function getFilterScopes(): array
     {
@@ -128,7 +130,7 @@ class Category extends Model
     }
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class,'product_categories');
+        return $this->belongsToMany(Product::class, 'product_categories');
     }
 
 
@@ -147,6 +149,4 @@ class Category extends Model
     {
         return $this->morphOne(File::class, 'fileable');
     }
-
-
 }

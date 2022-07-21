@@ -7,6 +7,7 @@ use App\Repositories\Eloquent\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Category;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -21,7 +22,8 @@ class HandleInertiaRequests extends Middleware
 
     protected $categoryRepository;
 
-    public function __construct(CategoryRepository $categoryRepository){
+    public function __construct(CategoryRepository $categoryRepository)
+    {
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -60,9 +62,12 @@ class HandleInertiaRequests extends Middleware
 
         //dd($info);
         $_result = [];
-        foreach ($info as $item){
+        foreach ($info as $item) {
             $_result[$item->key] = $item;
         }
+
+
+
 
         //dd($result,$categories);
 
@@ -76,7 +81,7 @@ class HandleInertiaRequests extends Middleware
             "locales" => $locales,
             "pathname" => $currentRoute,
             "locale_urls" => $locale_urls,
-            'urlPrev'	=> $urlPrev,
+            'urlPrev'    => $urlPrev,
             //'categories' => $result,
             'info' => $_result,
             'user' => Auth::guard('customer')->user(),
@@ -84,10 +89,12 @@ class HandleInertiaRequests extends Middleware
         ]);
     }
 
-    private function buildTree($data){
+
+    private function buildTree($data)
+    {
         $result = [];
 
-        foreach ($data as $key => $category){
+        foreach ($data as $key => $category) {
             $result[$key]['title'] = $category->title;
             $result[$key]['id'] = $category->id;
             $result[$key]['slug'] = $category->slug;
@@ -95,7 +102,7 @@ class HandleInertiaRequests extends Middleware
             $result[$key]['position'] = $category->position;
             $result[$key]['children'] = [];
             $result[$key]['files'] = $category->files;
-            if(count($category->children)){
+            if (count($category->children)) {
                 $result[$key]['children'] = $this->buildTree($category->children);
             }
         }
@@ -111,7 +118,7 @@ class HandleInertiaRequests extends Middleware
         //Generates link for go back button
         if (url()->previous() !== route('login') && url()->previous() !== '' && url()->previous() !== url()->current()) {
             return url()->previous();
-        }else {
+        } else {
             return "/";
         }
     }
@@ -123,9 +130,8 @@ class HandleInertiaRequests extends Middleware
     {
         $locales = config("translatable.locales");
         $routes = [];
-        foreach ($locales as $key => $val)
-        {
-         $routes[$key] = get_url($val);
+        foreach ($locales as $key => $val) {
+            $routes[$key] = get_url($val);
         }
         return $routes;
     }
@@ -167,6 +173,9 @@ class HandleInertiaRequests extends Middleware
             }
         }
 
+        $categories = $this->categoryRepository->getVisibleCategoryTree();
+        $result1 = $this->buildTree($categories);
+
         Inertia::share([
             "gphone" => $gphone,
             "gemail" => $gemail,
@@ -174,8 +183,10 @@ class HandleInertiaRequests extends Middleware
             "ginstagram" => $ginstagram,
             "gfacebook" => $gfacebook,
             "gcity" => $gcity,
-            "gcountry" => $gcountry
+            "gcountry" => $gcountry,
+            // 'categories' => Category::all(),
+            // 'Categories' => Category::with('translations')->get(),
+            'Categories' => $result1,
         ]);
     }
-
 }

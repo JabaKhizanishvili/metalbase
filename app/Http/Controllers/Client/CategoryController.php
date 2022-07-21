@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Symfony\Component\HttpKernel\HttpCache\Ssi;
 
 class CategoryController extends Controller
 {
@@ -34,7 +35,7 @@ class CategoryController extends Controller
         $products = Product::where(['status' => 1, 'product_categories.category_id' => $category->id])
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')->with('latestImage')
             ->orderby('updated_at', 'desc')
-            ->paginate(16);
+            ->paginate(10);
 
         $images = [];
         foreach ($page->sections as $sections) {
@@ -48,7 +49,8 @@ class CategoryController extends Controller
         //dd($products);
 
         //dd($products);
-        return Inertia::render('Products/Products', [
+        return Inertia::render('Tiles', [
+            'name' => $slug,
             'products' => $products,
             'category' => $category,
             'images' => $images,
@@ -89,7 +91,7 @@ class CategoryController extends Controller
             ->orderby('updated_at', 'desc')
             ->paginate(16);
 
-        return Inertia::render('Products/Products', [
+        return Inertia::render('Tiles', [
             'products' => $products,
             'category' => null,
             'images' => $images,
