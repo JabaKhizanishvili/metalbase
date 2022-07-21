@@ -72,7 +72,7 @@ const Navbar = ({ seo, page }) => {
 
     const langFlags = {
         "ქართული": "/assets/images/icons/ge.png",
-        "english": "/assets/images/icons/en.png",
+        "English": "/assets/images/icons/en.png",
         "ge": "/assets/images/icons/ge.png",
         "en": "/assets/images/icons/en.png",
     }
@@ -144,6 +144,7 @@ const Navbar = ({ seo, page }) => {
 
                                     {
                                         Object.keys(locales).map((e, i) => {
+                                            console.log(langFlags[e], 'esaa', e);
                                             return (
                                                 <Link key={i} href={locale_urls[e]}> <img src={langFlags[e]} alt="" /></Link>
                                             )
