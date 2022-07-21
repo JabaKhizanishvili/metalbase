@@ -78,6 +78,7 @@ const Navbar = ({ seo, page }) => {
     }
     const [showMenu, setShowMenu] = useState(false);
     const { errors, gphone, gemail, gaddress, locales, currentLocale, locale_urls } = usePage().props;
+
     return (
         <div className="text-sm relative z-50 h-12 bg-custom-blue-900 lg:h-auto flex items-center justify-between">
             <Link href="/" className="lg:hidden pl-3">
@@ -144,7 +145,6 @@ const Navbar = ({ seo, page }) => {
 
                                     {
                                         Object.keys(locales).map((e, i) => {
-                                            console.log(langFlags[e], 'esaa', e);
                                             return (
                                                 <Link key={i} href={locale_urls[e]}> <img src={langFlags[e]} alt="" /></Link>
                                             )
